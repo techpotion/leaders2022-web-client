@@ -1,0 +1,37 @@
+<ng-container [formGroup]="form">
+    <mat-form-field 
+        floatLabel="never">
+        <input matInput
+               [ngxMatDatetimePicker]="fromPicker"
+               placeholder="Дата и время начала"
+               formControlName="from"
+               (blur)="onTouched()">
+        <!-- eslint-disable -->
+        <mat-datepicker-toggle matSuffix
+                               [for]="$any(fromPicker)">
+        </mat-datepicker-toggle>
+        <!-- eslint-enable -->
+
+        <ngx-mat-datetime-picker #fromPicker>
+        </ngx-mat-datetime-picker>
+    </mat-form-field>
+
+    <span>—</span>
+
+    <mat-form-field
+            floatLabel="never">
+        <input matInput
+               [ngxMatDatetimePicker]="toPicker"
+               placeholder="Дата и время конца"
+               formControlName="to"
+               (blur)="onTouched()">
+        <!-- eslint-disable -->
+        <mat-datepicker-toggle matSuffix
+                               [for]="$any(toPicker)">
+        </mat-datepicker-toggle>
+        <!-- eslint-enable -->
+
+        <ngx-mat-datetime-picker #toPicker>
+        </ngx-mat-datetime-picker>
+    </mat-form-field>
+</ng-container>

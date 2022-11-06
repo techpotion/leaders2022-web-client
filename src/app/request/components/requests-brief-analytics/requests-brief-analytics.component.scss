@@ -1,0 +1,61 @@
+@import 'placeholders';
+
+:host {
+  height: 100px;
+
+  display: flex;
+  gap: 15px;
+
+  .card {
+    height: 100%;
+    padding-left: 20px;
+    box-sizing: border-box;
+    border-radius: 12px;
+
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    gap: 15px;
+
+    background: var(--theme-white-1000-color);
+    box-shadow: var(--default-shadow);
+
+    .icon-container {
+      width: 45px;
+      height: 45px;
+      border-radius: 8px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .text-container {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      color: var(--text-dark-color);
+
+      .heading {
+        @extend %base-font14-normal;
+      }
+
+      .number {
+        @extend %base-font24-bold;
+      }
+    }
+
+    &.all-count-card {
+      .icon-container {
+        background: rgba(0, 68, 37, .15);
+      }
+    }
+
+    &.anomaly-count-card {
+      .icon-container {
+        background: var(--theme-secondary-400-color);
+      }
+    }
+  }
+}

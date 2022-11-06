@@ -1,0 +1,128 @@
+@import 'placeholders';
+
+:host {
+  position: relative;
+
+  .input-container {
+    height: 54px;
+    padding: 0 15px;
+    border-radius: 8px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    background: var(--theme-white-1000-color);
+    box-shadow: var(--default-shadow);
+    transition: var(--base-transition);
+
+    &:hover {
+      .text {
+        color: var(--neutral-600-color);
+      }
+
+      .open-button {
+        path {
+          opacity: 1;
+        }
+      }
+    }
+
+    .text {
+      @extend %base-font14-normal;
+
+      transition: var(--base-transition);
+      width: 0;
+      flex-grow: 1;
+
+      &:disabled {
+        color: var(--text-muted-color);
+        user-select: none;
+      }
+    }
+
+    .open-button {
+      position: relative;
+
+      .animation-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+
+        height: 100%;
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .faq-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .open-button, .faq-button {
+      width: 20px;
+      height: 20px;
+
+      path {
+        transition: var(--base-transition);
+      }
+
+      &:hover {
+        path {
+          opacity: 1;
+        }
+      }
+
+      &:active {
+        path {
+          stroke-width: 0.5px;
+        }
+      }
+    }
+  }
+
+  .options {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    padding: 10px;
+    max-height: 300px;
+    border-radius: 8px;
+    box-shadow: var(--2x-shadow);
+
+    overflow: auto;
+
+    background: var(--theme-white-1000-color);
+
+    .option {
+      min-height: 35px;
+      padding-right: 10px;
+      padding-left: 5px;
+      box-sizing: border-box;
+
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      span {
+        @extend %base-font14-normal;
+
+        text-align: start;
+        color: var(--text-dark-color);
+      }
+    }
+  }
+}

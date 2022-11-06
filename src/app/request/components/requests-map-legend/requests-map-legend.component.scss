@@ -1,0 +1,45 @@
+@import 'placeholders';
+
+:host {
+  position: relative;
+
+  .animation-container {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    bottom: 0;
+
+    .toggle-button {
+      width: 40px;
+      height: 40px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      cursor: default;
+
+      img {
+        width: 20px;
+      }
+    }
+
+    .legend-container {
+      @extend %base-font12-normal;
+      padding: 16px;
+
+      display: grid;
+      row-gap: 10px;
+      column-gap: 20px;
+      grid-template-columns: 165px 240px;
+
+      user-select: none;
+
+      .element-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+<div class="top-container">
+    <div class="control-container"
+        [formGroup]="data.form">
+        <tp-request-address-search
+            class="address-search">
+        </tp-request-address-search>
+
+        <tp-sort-n-group-control
+            formControlName="sort">
+        </tp-sort-n-group-control>
+    </div>
+
+    <tp-requests-brief-analytics>
+    </tp-requests-brief-analytics>
+</div>
+
+<ng-container *ngIf="data.requests | async as syncRequests">
+    <cdk-virtual-scroll-viewport
+            #scrollViewport
+            class="scroll-container"
+            *ngIf="syncRequests.length"
+            appendOnly
+            [itemSize]="220"
+            [minBufferPx]="1200"
+            [maxBufferPx]="1210">
+        <tp-request-card class="request-card"
+                *cdkVirtualFor="let request of syncRequests"
+                [request]="request"
+                [id]="'request-card-' + request.id">
+        </tp-request-card>
+    </cdk-virtual-scroll-viewport>
+</ng-container>
+
+<div class="no-content-container hint-container"
+    *ngIf="(data.requests | async) === null">
+    <span class="hint">
+        Пока список пуст. Чтобы найти аномальные заявки, выберите 
+        район и временной диапазон в фильтрах карты.
+    </span>
+
+    <img src="assets/illustrations/confused-girl.png" alt="">
+</div>
+
+<div class="content-empty-container hint-container"
+    *ngIf="(data.requests | async)?.length === 0">
+    <span class="hint">
+        Результаты по вашему запросу не найдены. Измените значения фильтров и
+        попробуйте снова.
+    </span>
+
+    <img src="assets/illustrations/sad-girl.png" alt="">
+</div>

@@ -1,0 +1,38 @@
+:host {
+  padding: 4px;
+
+  &:hover {
+    button {
+      opacity: 1;
+    }
+  }
+
+  button {
+    position: relative;
+
+    height: 16px;
+    width: 16px;
+    border-radius: 2px;
+    border: 1px solid var(--green-dark-color);
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: .7;
+    transition: var(--base-transition);
+
+    &.selected {
+      background: var(--green-dark-color);
+    }
+
+    img {
+      width: 10px;
+
+      position: absolute;
+      left: 2px;
+      top: 3.5px;
+    }
+  }
+}

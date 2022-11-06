@@ -1,0 +1,72 @@
+@import 'placeholders';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  width: 525px;
+  padding-top: 10px;
+  box-sizing: border-box;
+
+  .top-container {
+    padding-right: 10px;
+    padding-left: 5px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .control-container {
+      display: flex;
+      gap: 15px;
+
+      .address-search {
+        width: 0;
+        flex-grow: 1;
+      }
+    }
+  }
+
+  .scroll-container {
+    height: 0;
+    flex-grow: 1;
+  }
+
+  ::ng-deep {
+    .cdk-virtual-scroll-content-wrapper {
+      padding: 20px;
+      padding-right: 10px;
+      padding-left: 5px;
+      box-sizing: border-box;
+
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+
+  .hint-container {
+    height: 0;
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+
+    .hint {
+      @extend %secondary-font24-normal;
+
+      max-width: 380px;
+      text-align: center;
+
+      color: var(--text-dark-color);
+    }
+
+    img {
+      height: 250px;
+    }
+  }
+}

@@ -1,0 +1,69 @@
+<div class="count-container">
+    <div class="marker-count incident"
+        *ngIf="incidentRequestsCount | async as count">
+        <img src="assets/icons/maroon-marker.svg" alt="incident">
+        <span class="number">{{ count }}</span>
+    </div>
+
+    <div class="marker-count anomaly"
+        *ngIf="anomalyRequestsCount | async as count">
+        <img src="assets/icons/red-marker.svg" alt="anomaly">
+        <span class="number">{{ count }}</span>
+    </div>
+
+    <div class="marker-count normal"
+        *ngIf="normalRequestsCount | async as count">
+        <img src="assets/icons/green-marker.svg" alt="normal">
+        <span class="number">{{ count }}</span>
+    </div>
+</div>
+
+<div class="list-container">
+    <div class="request-list incident"
+        *ngIf="incidentRequestsCount | async">
+        <div class="request"
+            *ngFor="let request of incidentRequests | async">
+            <img src="assets/icons/maroon-marker.svg" alt="">
+
+            <div class="text-container">
+                <span class="number">{{ request.number }}</span>
+                <button class="open-toggle"
+                    (click)="openFull(request)">
+                    {{ request.deffect.shortName }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="request-list anomaly"
+        *ngIf="anomalyRequestsCount | async">
+        <div class="request"
+            *ngFor="let request of anomalyRequests | async">
+            <img src="assets/icons/red-marker.svg" alt="">
+
+            <div class="text-container">
+                <span class="number">{{ request.number }}</span>
+                <button class="open-toggle"
+                    (click)="openFull(request)">
+                    {{ request.deffect.shortName }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="request-list normal"
+        *ngIf="normalRequestsCount | async">
+        <div class="request"
+            *ngFor="let request of normalRequests | async">
+            <img src="assets/icons/green-marker.svg" alt="">
+
+            <div class="text-container">
+                <span class="number">{{ request.number }}</span>
+                <button class="open-toggle"
+                    (click)="openFull(request)">
+                    {{ request.deffect.shortName }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

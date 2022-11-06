@@ -1,0 +1,19 @@
+<div class="animation-container" [@loading]>
+    <div class="white-filter"
+        [class.blackout]="service.isGlobalScreenBlackout">
+    </div>
+
+    <div class="blur-filter"></div>
+
+    <img class="illustration"
+         src="assets/illustrations/animated-marker.svg"
+         alt="Loading..."
+         *ngIf="service.showLoader">
+
+    <div class="hint-container" *ngIf="service.loaderText">
+        <div class="arrow"></div>
+        <span class="hint">
+            {{ service.loaderText }}
+        </span>
+    </div>
+</div>

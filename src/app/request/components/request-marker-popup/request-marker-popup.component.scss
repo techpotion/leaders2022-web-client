@@ -1,0 +1,167 @@
+@import 'placeholders';
+
+:host {
+  width: 250px;
+  padding: 16px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+
+  .heading-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    width: 100%;
+
+    .number {
+      @extend %tertiary-font12-normal;
+      color: var(--neutral-400-color);
+    }
+
+    .open-toggle {
+      @extend %base-font16-bold;
+      color: var(--basic-1100-color);
+      text-align: start;
+
+      transition: var(--base-transition);
+
+      &:hover {
+        opacity: .8;
+        color: var(--green-dark-color);
+      }
+
+      &:active {
+        opacity: 1;
+      }
+    }
+  }
+
+  .address-container {
+    display: flex;
+    gap: 20px;
+
+    .icon-container {
+      min-width: 36px;
+      height: 36px;
+      border-radius: 8px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      transition: var(--base-transtion);
+      background: #f0f6ed;
+
+      &.bad {
+        background: #fff3f3;
+      }
+    }
+
+    .right-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .property-container {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        .property-name {
+          @extend %tertiary-font14-medium;
+
+          color: var(--neutral-500-color);
+        }
+
+        .property-value {
+          @extend %tertiary-font14-semibold;
+
+          color: var(--text-dark-color);
+        }
+      }
+
+      .badges-container {
+        display: flex;
+        gap: 5px;
+
+        .badge {
+          @extend %tertiary-font12-normal;
+
+          width: min-content;
+          padding: 2px 6px;
+          box-sizing: border-box;
+          border-radius: 10px;
+
+          background: rgba(129, 202, 147, .25);
+          color: var(--text-color-default);
+
+          &.district-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            .dot {
+              width: 6px;
+              height: 6px;
+              border-radius: 3px;
+
+              background: #297551;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .badge {
+    @extend %tertiary-font14-medium;
+
+    padding: 4px 9px;
+    border-radius: 12px;
+
+    background: #F0F6ED;
+
+    color: var(--text-dark-color);
+
+    &.bad {
+      background: #FFF3F3;
+    }
+
+    &.anomaly-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+
+      width: min-content;
+
+      .faq-button {
+        width: 12px;
+        height: 12px;
+
+        path {
+          transition: var(--base-transition);
+        }
+
+        &:hover {
+          path {
+            opacity: 1;
+          }
+        }
+
+        &:active {
+          path {
+            stroke-width: 0.5px;
+          }
+        }
+      }
+
+      .value {
+        @extend %tertiary-font14-normal;
+      }
+    }
+  }
+}

@@ -1,0 +1,171 @@
+%base-font {
+  font-family: Formular, sans-serif;
+}
+
+%base-font24 {
+  @extend %base-font;
+
+  font-size: 24px;
+  line-height: 24px;
+}
+
+%base-font24-bold {
+  @extend %base-font24;
+
+  font-weight: bold;
+}
+
+%base-font18 {
+  @extend %base-font;
+
+  font-size: 18px;
+  line-height: 22px;
+}
+
+%base-font18-normal {
+  @extend %base-font18;
+
+  font-weight: normal;
+}
+
+%base-font16 {
+  @extend %base-font;
+
+  font-size: 16px;
+  line-height: 24px;
+}
+
+%base-font16-normal {
+  @extend %base-font16;
+
+  font-weight: normal;
+}
+
+%base-font16-bold {
+  @extend %base-font16;
+
+  font-weight: bold;
+}
+
+%base-font14 {
+  @extend %base-font;
+
+  font-size: 14px;
+  line-height: 20px;
+}
+
+%base-font14-normal {
+  @extend %base-font14;
+
+  font-weight: normal;
+}
+
+%base-font14-bold {
+  @extend %base-font14;
+
+  font-weight: bold;
+}
+
+%base-font12 {
+  @extend %base-font;
+
+  font-size: 12px;
+  line-height: 18px;
+}
+
+%base-font12-normal {
+  @extend %base-font12;
+
+  font-weight: normal;
+}
+
+%base-font10 {
+  @extend %base-font;
+
+  font-size: 10px;
+  line-height: 15px;
+}
+
+%base-font10-bold {
+  @extend %base-font10;
+
+  font-weight: bold;
+}
+
+%secondary-font {
+  font-family: 'Proxima Nova', sans-serif;
+}
+
+%secondary-font24 {
+  @extend %secondary-font;
+
+  font-size: 24px;
+  line-height: 36px;
+}
+
+%secondary-font24-normal {
+  @extend %secondary-font24;
+
+  font-weight: normal;
+}
+
+%tertiary-font {
+  font-family: Inter, sans-serif;
+}
+
+%tertiary-font9 {
+  @extend %tertiary-font;
+
+  font-size: 9px;
+  line-height: 13px;
+}
+
+%tertiary-font9-normal {
+  @extend %tertiary-font9;
+
+  font-weight: normal;
+}
+
+%tertiary-font12 {
+  @extend %tertiary-font;
+
+  font-size: 12px;
+  line-height: 15px;
+}
+
+%tertiary-font12-normal {
+  @extend %tertiary-font12;
+
+  font-weight: normal;
+}
+
+%tertiary-font14 {
+  @extend %tertiary-font;
+
+  font-size: 14px;
+  line-height: 17px;
+}
+
+%tertiary-font14-normal {
+  @extend %tertiary-font14;
+
+  font-weight: normal;
+}
+
+%tertiary-font14-medium {
+  @extend %tertiary-font14;
+
+  font-weight: 500;
+}
+
+%tertiary-font14-semibold {
+  @extend %tertiary-font14;
+
+  font-weight: 600;
+}
+
+%tertiary-font14-bold {
+  @extend %tertiary-font14;
+
+  font-weight: bold;
+}

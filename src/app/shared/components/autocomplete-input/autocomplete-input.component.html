@@ -1,0 +1,20 @@
+<div class="input-container"
+     [class.open]="(isOpen | async)
+     && (searchedOptions | async)?.length"
+     (click)="onInputContainerClick()">
+    <input type="text"
+           [formControl]="control"
+           placeholder="Введите адрес объекта"
+           #input>
+
+    <img src="assets/icons/green-search.svg" alt="search">
+</div>
+
+<div class="options-container"
+    *ngIf="(isOpen | async) && (searchedOptions | async)?.length">
+    <button class="option"
+         (click)="selectOption(option)"
+        *ngFor="let option of searchedOptions | async">
+        {{ option }}
+    </button>
+</div>

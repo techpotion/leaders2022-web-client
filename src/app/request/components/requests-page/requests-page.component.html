@@ -1,0 +1,53 @@
+<tp-requests-list class="list"
+    *ngIf="view.listVisible| async">
+</tp-requests-list>
+
+<div class="map-container">
+    <tp-requests-map class="map">
+    </tp-requests-map>
+
+    <div class="map-controls">
+        <div class="right-container">
+            <button tpRequestsListToggle
+                class="request-toggle"
+                [isOpen]="(view.listVisible| async) ?? false"
+                (isOpenChange)="view.listVisible.next($event)">
+            </button>
+
+            <div class="filters-container">
+                <tp-requests-filters class="filters">
+                </tp-requests-filters>
+                
+                <button tpRequestsFiltersUpdateButton
+                    *ngIf="loadButtonVisible | async"
+                    (click)="data.reload.emit()">
+                </button>
+            </div>
+        </div>
+
+        <div class="left-container">
+            <div class="top-container">
+                <tp-profile-controls
+                        class="profile-controls">
+                </tp-profile-controls>
+
+                <tp-requests-map-zoom-controls
+                        class="zoom-controls">
+                </tp-requests-map-zoom-controls>
+
+                <button tpRequestHeatmapToggle
+                    [enabled]="(view.heatmapEnabled | async) ?? false"
+                    (enabledChange)="view.heatmapEnabled.next($event)">
+                </button>
+            </div>
+
+            <tp-requests-map-legend
+                class="map-legend">
+            </tp-requests-map-legend>
+        </div>
+    </div>
+</div>
+
+<tp-anomaly-faq-dialog *ngIf="dialog.faqDialogOpen | async"
+    (dialogClose)="dialog.faqDialogOpen.next(false)">
+</tp-anomaly-faq-dialog>

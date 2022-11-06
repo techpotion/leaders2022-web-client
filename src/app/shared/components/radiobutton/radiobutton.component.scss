@@ -1,0 +1,33 @@
+:host {
+  padding: 4px;
+
+  &:hover {
+    button {
+      opacity: 1;
+    }
+  }
+
+  button {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--green-dark-color);
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: var(--base-transition);
+
+    opacity: .7;
+
+    .content {
+      width: 8px;
+      height: 8px;
+      border-radius: 4px;
+
+      background: var(--green-dark-color);
+    }
+  }
+}

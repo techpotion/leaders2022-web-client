@@ -1,0 +1,12 @@
+:host {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--theme-white-1000-color);
+  box-shadow: var(--default-shadow);
+}

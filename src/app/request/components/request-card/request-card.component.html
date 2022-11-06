@@ -1,0 +1,373 @@
+<div class="brief-container">
+    <div class="heading-container"
+        [class.short]="(markingButtonVisible | async) === false
+        && !request?.anomaly?.netProbability">
+        <div class="text-container">
+            <span class="number">
+                № {{ request?.number }}
+            </span>
+
+            <button class="open-toggle"
+                (click)="toggleFull()">
+                {{ request?.deffect?.shortName }}
+            </button>
+        </div>
+
+        <div class="anomaly-container">
+            <span class="probability"
+                *ngIf="request?.anomaly?.netProbability"
+                title="Вероятность аномальности заявки по предсказанию нейронной сети">
+                {{ request?.anomaly?.netProbability }}%
+            </span>
+
+            <button class="mark-anomaly"
+                    *ngIf="markingButtonVisible | async"
+                    (click)="toggleAnomalyMark()">
+                <svg width="13"
+                     height="13"
+                     viewBox="0 0 13 13"
+                     fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.02833 5.19675C10.1167 4.27675 11.5867 3.83341 13 3.83341C14.4133 3.83341 15.8833 4.27675 16.9717 5.19675C18.0133 6.07675 18.8333 7.50008 18.8333 9.78008C18.8333 10.4001 18.5767 11.3734 18.0167 12.6517C17.4767 13.8901 16.725 15.2517 15.905 16.5967C14.9761 18.1023 13.9972 19.5765 12.97 21.0167C11.9309 19.564 10.9507 18.07 10.0317 16.5384C9.22333 15.1817 8.48833 13.8117 7.96 12.5801C7.41167 11.3034 7.16667 10.3534 7.16667 9.78008C7.16667 7.50008 7.98667 6.07675 9.02833 5.19675V5.19675ZM14.0117 22.4251C16.2667 19.2717 20.5 13.0701 20.5 9.78008C20.5 4.31341 16.4617 2.16675 13 2.16675C9.53833 2.16675 5.5 4.31341 5.5 9.78008C5.5 12.9151 9.625 19.2634 11.9467 22.4467C12.37 23.0267 12.7333 23.5017 13 23.8334L13.3283 23.3784L14.0117 22.4251V22.4251Z"
+                          fill="#004425"
+                          opacity="0.7"
+                          stroke="#004425"
+                          stroke-width="0"
+                          transform="scale(0.5)"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="badges-container">
+        <div class="has-anomaly-badge badge bad"
+            *ngIf="request?.isIncident && request?.anomaly?.exists">
+            Аномальный инцидент
+        </div>
+
+        <div class="has-anomaly-badge badge bad"
+            *ngIf="!request?.isIncident && request?.anomaly?.exists">
+            Аномальная заявка
+        </div>
+
+        <div class="anomaly-badge badge bad"
+             *ngIf="request?.anomaly?.cases?.length
+                     && request?.anomaly?.exists">
+            <button class="faq-button"
+                (click)="dialog.faqDialogOpen.next(true)">
+                <svg width="12"
+                     height="12"
+                     viewBox="0 0 12 12"
+                     fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 15C6.14348 15 4.36301 14.2625 3.05025 12.9497C1.7375 11.637 1 9.85652 1 8C1 6.14348 1.7375 4.36301 3.05025 3.05025C4.36301 1.7375 6.14348 1 8 1C9.85652 1 11.637 1.7375 12.9497 3.05025C14.2625 4.36301 15 6.14348 15 8C15 9.85652 14.2625 11.637 12.9497 12.9497C11.637 14.2625 9.85652 15 8 15ZM8 16C10.1217 16 12.1566 15.1571 13.6569 13.6569C15.1571 12.1566 16 10.1217 16 8C16 5.87827 15.1571 3.84344 13.6569 2.34315C12.1566 0.842855 10.1217 0 8 0C5.87827 0 3.84344 0.842855 2.34315 2.34315C0.842855 3.84344 0 5.87827 0 8C0 10.1217 0.842855 12.1566 2.34315 13.6569C3.84344 15.1571 5.87827 16 8 16Z"
+                          fill="#27272E"
+                          opacity="0.7"
+                          stroke="#27272E"
+                          stroke-width="0"
+                          transform="translate(1 1), scale(0.66)"/>
+                    <path d="M5.2551 5.786C5.25373 5.81829 5.25898 5.85053 5.27053 5.88072C5.28208 5.91091 5.29968 5.93841 5.32225 5.96155C5.34482 5.98468 5.37189 6.00296 5.40179 6.01524C5.43168 6.02753 5.46378 6.03357 5.4961 6.033H6.3211C6.4591 6.033 6.5691 5.92 6.5871 5.783C6.6771 5.127 7.1271 4.649 7.9291 4.649C8.6151 4.649 9.2431 4.992 9.2431 5.817C9.2431 6.452 8.8691 6.744 8.2781 7.188C7.6051 7.677 7.0721 8.248 7.1101 9.175L7.1131 9.392C7.11415 9.45761 7.14095 9.52017 7.18772 9.5662C7.23449 9.61222 7.29748 9.63801 7.3631 9.638H8.1741C8.2404 9.638 8.30399 9.61166 8.35087 9.56478C8.39776 9.51789 8.4241 9.4543 8.4241 9.388V9.283C8.4241 8.565 8.6971 8.356 9.4341 7.797C10.0431 7.334 10.6781 6.82 10.6781 5.741C10.6781 4.23 9.4021 3.5 8.0051 3.5C6.7381 3.5 5.3501 4.09 5.2551 5.786ZM6.8121 11.549C6.8121 12.082 7.2371 12.476 7.8221 12.476C8.4311 12.476 8.8501 12.082 8.8501 11.549C8.8501 10.997 8.4301 10.609 7.8211 10.609C7.2371 10.609 6.8121 10.997 6.8121 11.549Z"
+                          fill="#27272E"
+                          opacity="0.7"
+                          stroke="#27272E"
+                          stroke-width="0"
+                          transform="translate(1 1), scale(0.66)"/>
+                </svg>
+            </button>
+
+            <span class="hint">
+                Аномалии:
+            </span>
+
+            <span class="value">
+                {{ (request?.anomaly?.cases ?? []) | join : ',' }}
+            </span>
+        </div>
+
+        <div class="urgency-badge badge"
+             [class.bad]="request?.urgency?.ru === urgencyType.Emergency">
+            {{ request?.urgency?.ru }}
+        </div>
+    </div>
+
+    <div class="address-container">
+        <div class="left-container">
+            <div class="icon-container"
+                 [class.bad]="request?.anomaly?.exists">
+                <img [src]="'assets/icons/'
+                            + (request?.anomaly?.exists ? 'red' : 'green')
+                            + (request?.isIncident ? '-exclamation' : '')
+                            +'-marker-stroked.svg'" alt="">
+            </div>
+
+            <div class="full-address-container property-container">
+                <span class="hint property-name">
+                    Адрес
+                </span>
+                <span class="address property-value">
+                    {{ request?.address?.full }}
+                </span>
+            </div>
+        </div>
+
+        <div class="badges-container">
+            <div class="district-badge badge">
+                <div class="dot"></div>
+                {{ request?.address?.district?.name }}
+            </div>
+
+            <div class="hood-badge badge">
+                {{ request?.address?.hood?.name }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="full-container" *ngIf="isFullOpen | async">
+    <div class="partition-container"
+        *ngIf="request?.creationDate && request?.closeDate">
+        <div class="icon-container">
+            <img src="assets/icons/property/clock.svg" alt="">
+        </div>
+
+        <div class="properties">
+            <div class="property-container">
+                <span class="property-name">Время закрытия заявки</span>
+                <span class="property-value">
+                    {{ (request?.closeDate ?? undefined) | dateDelta : (request?.creationDate ?? undefined)}}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="partition-container"
+        *ngIf="request?.creationDate || request?.closeDate">
+        <div class="icon-container">
+            <img src="assets/icons/property/calendar.svg" alt="">
+        </div>
+
+        <div class="properties">
+            <div class="property-container" *ngIf="request?.creationDate">
+                <span class="property-name">Дата открытия заявки</span>
+                <span class="property-value">{{ request?.creationDate ?? undefined | dateFormat }}</span>
+            </div>
+
+            <div class="property-container" *ngIf="request?.closeDate">
+                <span class="property-name">Дата закрытия заявки</span>
+                <span class="property-value">{{ request?.closeDate ?? undefined | dateFormat }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="partition-container"
+        *ngIf="request?.description || request?.comment">
+        <div class="icon-container">
+            <img src="assets/icons/property/message.svg" alt="">
+        </div>
+
+        <div class="properties">
+            <div class="property-container" *ngIf="request?.description">
+                <span class="property-name">Описание</span>
+                <span class="property-value">{{ request?.description }}</span>
+            </div>
+
+            <div class="property-container" *ngIf="request?.comment">
+                <span class="property-name">Комментарии</span>
+                <span class="property-value">{{ request?.comment }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="partition-container"
+        *ngIf="request?.dispatcher">
+        <div class="icon-container">
+            <img src="assets/icons/property/phone.svg" alt="">
+        </div>
+
+        <div class="properties">
+            <div class="property-container">
+                <span class="property-name">Номер ОДС</span>
+                <span class="property-value">{{ request?.dispatcher }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="partition-container"
+        *ngIf="request?.deffect?.name
+        || request?.deffect?.shortName
+        || request?.deffect?.category?.name?.ru
+        || request?.deffect?.category?.id">
+        <div class="icon-container">
+            <img src="assets/icons/property/broken-house.svg" alt="">
+        </div>
+
+        <div class="properties">
+            <div class="property-container" *ngIf="request?.deffect?.name">
+                <span class="property-name">Наименование дефекта</span>
+                <span class="property-value">{{ request?.deffect?.name }}</span>
+            </div>
+
+            <div class="property-container" *ngIf="request?.deffect?.shortName">
+                <span class="property-name">Краткое наименование дефекта</span>
+                <span class="property-value">{{ request?.deffect?.shortName }}</span>
+            </div>
+
+            <div class="property-container" *ngIf="request?.deffect?.category?.name?.ru">
+                <span class="property-name">Категория дефекта</span>
+                <span class="property-value">{{ request?.deffect?.category?.name?.ru }}</span>
+            </div>
+
+            <div class="property-container" *ngIf="request?.deffect?.category?.id">
+                <span class="property-name">Корневой идентификатор категории дефекта</span>
+                <span class="property-value">{{ request?.deffect?.category?.id }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="partition-container"
+        *ngIf="request?.work?.name
+        || request?.work?.material">
+        <div class="icon-container">
+            <img src="assets/icons/property/wrench.svg" alt="">
+        </div>
+
+        <div class="properties">
+            <div class="property-container" *ngIf="request?.work?.name">
+                <span class="property-name">Вид выполненных работ</span>
+                <span class="property-value">{{ request?.work?.name }}</span>
+            </div>
+
+            <div class="property-container" *ngIf="request?.work?.material">
+                <span class="property-name">Израсходованный материал</span>
+                <span class="property-value">{{ request?.work?.material }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="partition-container"
+        *ngIf="request?.declineReason?.name
+        || request?.performingOrganizationDeclineReason?.name">
+        <div class="icon-container">
+            <img src="assets/icons/property/list-decline.svg" alt="">
+        </div>
+
+        <div class="properties">
+            <div class="property-container" *ngIf="request?.declineReason?.name">
+                <span class="property-name">Причина отказа исполнителя</span>
+                <span class="property-value">{{ request?.declineReason?.name }}</span>
+            </div>
+
+            <div class="property-container" *ngIf="request?.performingOrganizationDeclineReason?.name">
+                <span class="property-name">Причина отказа организации-исполнителя</span>
+                <span class="property-value">{{ request?.performingOrganizationDeclineReason?.name }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="partition-container"
+        *ngIf="request?.service
+        || request?.owner
+        || request?.performingOrganization?.inn
+        || request?.performingOrganization?.name">
+        <div class="icon-container">
+            <img src="assets/icons/property/worker.svg" alt="">
+        </div>
+
+        <div class="properties">
+            <div class="property-container" *ngIf="request?.service">
+                <span class="property-name">Обслуживающая организация (исполнитель)</span>
+                <span class="property-value">{{ request?.service }}</span>
+            </div>
+
+            <div class="property-container" *ngIf="request?.owner">
+                <span class="property-name">Управляющая компания</span>
+                <span class="property-value">{{ request?.owner }}</span>
+            </div>
+
+            <div class="property-container" *ngIf="request?.performingOrganization?.inn">
+                <span class="property-name">ИНН организации-исполнителя</span>
+                <span class="property-value">{{ request?.performingOrganization?.inn }}</span>
+            </div>
+
+            <div class="property-container" *ngIf="request?.performingOrganization?.name">
+                <span class="property-name">Идентификатор организации-исполнителя</span>
+                <span class="property-value">{{ request?.performingOrganization?.name }}</span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="partition-container"
+        *ngIf="request?.review?.text
+        || request?.grade?.ru
+        || request?.review?.date">
+        <div class="icon-container">
+            <img src="assets/icons/property/message.svg" alt="">
+        </div>
+
+        <div class="properties">
+            <div class="property-container" *ngIf="request?.review?.text">
+                <span class="property-name">Отзыв</span>
+                <span class="property-value">{{ request?.review?.text }}</span>
+            </div>
+
+            <div class="property-container" *ngIf="request?.grade?.ru">
+                <span class="property-name">Оценка качества выполнения работ</span>
+                <span class="property-value">{{ request?.grade?.ru }}</span>
+            </div>
+
+            <div class="property-container" *ngIf="request?.review?.date">
+                <span class="property-name">Дата отзыва/оценки</span>
+                <span class="property-value">{{ request?.review?.date ?? undefined | dateFormat }}</span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="partition-container"
+        *ngIf="request?.payment?.type?.ru
+        || request?.payment?.byCard">
+        <div class="icon-container">
+            <img src="assets/icons/property/coin.svg" alt="">
+        </div>
+
+        <div class="properties">
+            <div class="property-container" *ngIf="request?.payment?.type?.ru">
+                <span class="property-name">Категория платности</span>
+                <span class="property-value">{{ request?.payment?.type?.ru }}</span>
+            </div>
+
+            <div class="property-container" *ngIf="request?.payment?.byCard">
+                <span class="property-name">Признак оплаты картой</span>
+                <span class="property-value">{{ request?.payment?.byCard }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="partition-container"
+        *ngIf="request?.source?.ru
+        || request?.creator">
+        <div class="icon-container">
+            <img src="assets/icons/property/pen.svg" alt="">
+        </div>
+
+        <div class="properties">
+            <div class="property-container" *ngIf="request?.source?.ru">
+                <span class="property-name">Источник поступления заявки</span>
+                <span class="property-value">{{ request?.source?.ru }}</span>
+            </div>
+
+            <div class="property-container" *ngIf="request?.creator">
+                <span class="property-name">Имя создателя заявки</span>
+                <span class="property-value">{{ request?.creator }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="close-button-container">
+        <button class="close-button"
+            (click)="onCloseButtonClick()">
+            Скрыть подробности
+        </button>
+    </div>
+</div>

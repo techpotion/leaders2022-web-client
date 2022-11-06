@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  height: 100%;
+
+  ::ng-deep {
+    .mapboxgl-control-container {
+      display: none;
+    }
+
+    .mapboxgl-popup {
+      max-width: none !important;
+      filter: drop-shadow(var(--2x-shadow-part1)) drop-shadow(var(--default-shadow-part2));
+
+      .mapboxgl-popup-content {
+        padding: 0;
+        border-radius: 16px;
+
+        background: var(--theme-white-1000-color);
+      }
+    }
+  }
+}

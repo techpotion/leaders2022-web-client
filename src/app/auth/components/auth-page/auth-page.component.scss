@@ -1,0 +1,53 @@
+:host {
+  height: 100%;
+  overflow: hidden;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .background {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    top: 0;
+
+     .illustration {
+       position: absolute;
+       left: -23%;
+       bottom: -5%;
+
+       width: 50%;
+
+       @media (max-width: 1000px) {
+         left: -230px;
+
+         width: 500px;
+       }
+     }
+
+     .white-filter,
+     .blur-filter {
+       position: absolute;
+       left: 0;
+       top: 0;
+
+       width: 100%;
+       height: 100%;
+     }
+
+     .white-filter {
+       background: var(--theme-white-1000-color);
+       opacity: .2;
+     }
+
+     .blur-filter {
+       backdrop-filter: blur(4px);
+     }
+  }
+}

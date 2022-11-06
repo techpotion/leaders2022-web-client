@@ -1,0 +1,24 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  button {
+    path {
+      transition: var(--base-transition);
+    }
+
+    &:hover {
+      path {
+        opacity: 1;
+      }
+    }
+
+    &:active {
+      path {
+        stroke-width: 3px;
+      }
+    }
+  }
+}

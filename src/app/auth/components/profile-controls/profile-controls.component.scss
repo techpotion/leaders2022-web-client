@@ -1,0 +1,38 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  border-radius: 8px;
+  box-shadow: var(--default-shadow);
+
+  background: var(--theme-white-1000-color);
+
+  .sign-out-button {
+    display: flex;
+    padding: 12px;
+
+    path {
+      transition: var(--base-transition);
+    }
+
+    &:hover {
+      path {
+        opacity: 1;
+      }
+    }
+
+    &:active {
+      path {
+        stroke-width: .5;
+      }
+    }
+  }
+
+  .avatar {
+    width: 30px;
+    margin: 12px;
+    margin-left: 0;
+    border-radius: 10px;
+  }
+}

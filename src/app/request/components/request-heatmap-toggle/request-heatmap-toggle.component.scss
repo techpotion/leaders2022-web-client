@@ -1,0 +1,38 @@
+:host {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--theme-white-1000-color);
+  box-shadow: var(--default-shadow);
+
+  transition: var(--base-transition);
+
+  img {
+    height: 24px;
+    opacity: .9;
+
+    transition: var(--base-transition);
+  }
+
+  &:hover {
+    img {
+      height: 25px;
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    img {
+      height: 24px;
+    }
+  }
+
+  &.enabled {
+    background: var(--green-dark-color);
+  }
+}

@@ -1,0 +1,5 @@
+<button [class.selected]="selected$ | async">
+    <img src="assets/icons/tick.svg"
+         *ngIf="selected$ | async"
+         [@tick]>
+</button>

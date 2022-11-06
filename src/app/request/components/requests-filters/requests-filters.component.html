@@ -1,0 +1,34 @@
+<ng-container [formGroup]="data.form">
+    <ng-container formGroupName="update">
+        <tp-request-address-search
+                *ngIf="(view.listVisible | async) === false">
+        </tp-request-address-search>
+
+        <tp-date-range formControlName="datetimeRange">
+        </tp-date-range>
+
+        <tp-select [options]="(regionOptions | async) ?? []"
+                class="region-select"
+                placeholder="Район"
+                formControlName="region">
+        </tp-select>
+    </ng-container>
+
+    <ng-container formGroupName="filter">
+        <tp-select [options]="urgencyOptions"
+                class="urgency-select"
+                placeholder="Срочность"
+                formControlName="urgency">
+        </tp-select>
+
+        <tp-select [options]="anomalyOptions"
+                class="anomaly-select"
+                placeholder="Аномалия"
+                [multiple]="true"
+                [hasFaq]="true"
+                [multiplePlaceholderFn]="anomalyPlaceholderFn"
+                (faqClick)="dialog.faqDialogOpen.next(true)"
+                formControlName="anomalyCases">
+        </tp-select>
+    </ng-container>
+</ng-container>

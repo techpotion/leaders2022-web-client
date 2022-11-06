@@ -1,0 +1,141 @@
+<button class="open-button"
+    [class.selected]="selected | async"
+    (click)="toggleIsOpen()">
+    <svg width="28"
+         height="28"
+         viewBox="0 0 28 28"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg">
+        <path d="M3.69932 10.4494L7.14997 6.99711V23.2813C7.14997 23.5316 7.2494 23.7716 7.42639 23.9486C7.60337 24.1256 7.84342 24.225 8.09372 24.225C8.34402 24.225 8.58406 24.1256 8.76105 23.9486C8.93804 23.7716 9.03747 23.5316 9.03747 23.2813V6.99711L12.4881 10.4494L12.4881 10.4494C12.6653 10.6266 12.9056 10.7261 13.1562 10.7261C13.4068 10.7261 13.6471 10.6266 13.8243 10.4494C14.0015 10.2722 14.101 10.0319 14.101 9.78129C14.101 9.53071 14.0015 9.29039 13.8243 9.11321L8.76189 4.0508C8.76187 4.05077 8.76183 4.05073 8.7618 4.05071C8.67415 3.96286 8.57005 3.89316 8.45543 3.8456C8.34077 3.79803 8.21785 3.77354 8.09372 3.77354C7.96958 3.77354 7.84666 3.79803 7.73201 3.8456C7.61735 3.89318 7.51321 3.96291 7.42554 4.0508L2.36313 9.11321C2.18594 9.29039 2.0864 9.53071 2.0864 9.78129C2.0864 10.0319 2.18594 10.2722 2.36313 10.4494C2.54032 10.6266 2.78064 10.7261 3.03122 10.7261C3.2818 10.7261 3.52212 10.6266 3.6993 10.4494L3.69932 10.4494ZM14.1874 19.0657L19.219 23.9295V23.9311L19.2494 23.9606C19.4254 24.1313 19.661 24.2267 19.9062 24.2267C20.1514 24.2267 20.387 24.1313 20.5631 23.9606L25.6255 19.0669C25.8057 18.8928 25.9093 18.6541 25.9135 18.4036C25.9178 18.153 25.8223 17.911 25.6481 17.7308C25.4739 17.5506 25.2353 17.447 24.9847 17.4427C24.7342 17.4385 24.4922 17.534 24.312 17.7081L24.312 17.7082L20.85 21.0559V4.72048C20.85 4.47018 20.7505 4.23014 20.5735 4.05315C20.3966 3.87616 20.1565 3.77673 19.9062 3.77673C19.6559 3.77673 19.4159 3.87616 19.2389 4.05315C19.0619 4.23014 18.9625 4.47018 18.9625 4.72048V21.056L15.5011 17.7105C15.501 17.7104 15.5009 17.7103 15.5008 17.7101C15.4121 17.6229 15.3071 17.5541 15.1917 17.5076C15.0761 17.4611 14.9525 17.4379 14.828 17.4393C14.7035 17.4408 14.5804 17.4669 14.466 17.5161C14.3516 17.5653 14.2481 17.6367 14.1614 17.7261C14.0747 17.8156 14.0066 17.9213 13.9609 18.0371C13.9153 18.153 13.893 18.2768 13.8955 18.4013C13.8979 18.5259 13.9249 18.6487 13.975 18.7627C14.0251 18.8767 14.0972 18.9796 14.1873 19.0655C14.1873 19.0656 14.1874 19.0656 14.1874 19.0657Z"
+              fill="#004425"
+              opacity="0.7"
+              stroke="#004425"
+              stroke-width="0"/>
+    </svg>
+</button>
+
+<div class="select-container"
+    *ngIf="isOpen | async">
+    <div class="group">
+        <span class="group-heading">
+            По аномальности
+        </span>
+
+        <div class="option-container">
+            <button class="option"
+                (click)="setGroupOption(groupOption.NormalFirst)">
+                <button tpRadiobutton
+                    (click)="setGroupOption(groupOption.NormalFirst)"
+                    [selected]="(groupControl | async) === groupOption.NormalFirst">
+                </button>
+                <span class="option-text">
+                    Сначала не аномальные
+                </span>
+            </button>
+
+            <button class="option"
+                (click)="setGroupOption(groupOption.AnomalyFirst)">
+                <button tpRadiobutton
+                    (click)="setGroupOption(groupOption.AnomalyFirst)"
+                    [selected]="(groupControl | async) === groupOption.AnomalyFirst">
+                </button>
+                <span class="option-text">
+                    Сначала аномальные
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <div class="group">
+        <span class="group-heading">
+            По времени
+        </span>
+
+        <div class="option-container">
+            <button class="option"
+                (click)="setSortOption(sortOption.CreationDateDescending)">
+                <button tpRadiobutton
+                    (click)="setSortOption(sortOption.CreationDateDescending)"
+                    [selected]="(sortControl | async) === sortOption.CreationDateDescending">
+                </button>
+                <span class="option-text">
+                    По времени открытия (сначала новые)
+                </span>
+            </button>
+
+            <button class="option"
+                (click)="setSortOption(sortOption.CreationDateAscending)">
+                <button tpRadiobutton
+                        (click)="setSortOption(sortOption.CreationDateAscending)"
+                    [selected]="(sortControl | async) === sortOption.CreationDateAscending">
+                </button>
+                <span class="option-text">
+                    По времени открытия (сначала старые)
+                </span>
+            </button>
+
+            <button class="option"
+                (click)="setSortOption(sortOption.CloseDateDescending)">
+                <button tpRadiobutton
+                        (click)="setSortOption(sortOption.CloseDateDescending)"
+                    [selected]="(sortControl | async) === sortOption.CloseDateDescending">
+                </button>
+                <span class="option-text">
+                    По времени закрытия (сначала новые)
+                </span>
+            </button>
+
+            <button class="option"
+                (click)="setSortOption(sortOption.CloseDateAscending)">
+                <button tpRadiobutton
+                        (click)="setSortOption(sortOption.CloseDateAscending)"
+                    [selected]="(sortControl | async) === sortOption.CloseDateAscending">
+                </button>
+                <span class="option-text">
+                    По времени закрытия (сначала старые)
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <div class="group">
+        <span class="group-heading">
+            По параметрам
+        </span>
+
+        <div class="option-container">
+            <button class="option"
+                (click)="setGroupOption(groupOption.IncidentFirst)">
+                <button tpRadiobutton
+                    (click)="setGroupOption(groupOption.IncidentFirst)"
+                    [selected]="(groupControl | async) === groupOption.IncidentFirst">
+                </button>
+                <span class="option-text">
+                    Сначала инциденты
+                </span>
+            </button>
+
+            <button class="option"
+                (click)="setGroupOption(groupOption.Urgency)">
+                <button tpRadiobutton
+                    (click)="setGroupOption(groupOption.Urgency)"
+                    [selected]="(groupControl | async) === groupOption.Urgency">
+                </button>
+                <span class="option-text">
+                    По срочности
+                </span>
+            </button>
+
+            <button class="option"
+                (click)="setGroupOption(groupOption.Deffect)">
+                <button tpRadiobutton
+                    (click)="setGroupOption(groupOption.Deffect)"
+                    [selected]="(groupControl | async) === groupOption.Deffect">
+                </button>
+                <span class="option-text">
+                    По дефекту
+                </span>
+            </button>
+        </div>
+    </div>
+</div>

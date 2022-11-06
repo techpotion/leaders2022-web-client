@@ -1,0 +1,41 @@
+:host {
+  .animation-container {
+    position: relative;
+
+    height: 54px;
+    width: 30px;
+    border-radius: 4px;
+
+    background: var(--theme-white-1000-color);
+    box-shadow: var(--default-shadow);
+
+    .icon-animation-container {
+      position: absolute;
+      left: 0;
+      top: 0;
+
+      height: 100%;
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      path {
+        transition: var(--base-transition);
+      }
+
+      &:hover {
+        path {
+          opacity: 1;
+        }
+      }
+
+      &:active {
+        path {
+          stroke-width: 1px;
+        }
+      }
+    }
+  }
+}

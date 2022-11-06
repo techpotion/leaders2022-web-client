@@ -1,0 +1,24 @@
+<div class="all-count-card card">
+    <div class="icon-container">
+        <img src="assets/icons/green-marker-stroked.svg" alt="">
+    </div>
+
+    <div class="text-container">
+        <span class="heading">Всего заявок</span>
+        <span class="number">{{ (data.requestsCount | async) ?? '—' }}</span>
+    </div>
+</div>
+
+<div class="anomaly-count-card card">
+    <div class="icon-container">
+        <img src="assets/icons/red-marker-stroked.svg" alt="">
+    </div>
+
+    <div class="text-container">
+        <span class="heading">Аномальных заявок</span>
+        <span class="number">
+            {{ (data.anomalyRequestsCount | async) ?? '—' }} |
+            {{ (data.anomalyPercentage | async | percent : '.0-1' ) ?? '—' }}
+        </span>
+    </div>
+</div>

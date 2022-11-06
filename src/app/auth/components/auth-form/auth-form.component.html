@@ -1,0 +1,51 @@
+<div class="title-container">
+    <img class="illustration"
+         src="assets/icons/building.svg"
+         alt="">
+
+    <h1 class="title">
+        Департамент жилищно-коммунального хозяйства
+    </h1>
+</div>
+
+<form class="form" [formGroup]="form"
+      (ngSubmit)="submit.emit($event)">
+    <div class="input-error-container">
+        <div class="input-container">
+            <div class="username-input-container">
+                <label for="usernameInput">Логин</label>
+                <tp-input-text
+                        inputId="usernameInput"
+                        formControlName="username"
+                        [invalid]="(usernameInputIsInvalid | async) ?? false">
+                </tp-input-text>
+            </div>
+
+            <div class="password-input-container">
+                <label for="passwordInput">Пароль</label>
+                <tp-input-password 
+                       inputId="passwordInput"
+                       formControlName="password"
+                       [invalid]="(passwordInputIsInvalid | async) ?? false"
+                       (enterKeydown)="submitButton.el.nativeElement.click()">
+                </tp-input-password>
+            </div>
+        </div>
+
+        <span class="input-error"
+            *ngIf="error$ | async as error"
+            [@slideBelow]>
+            <ng-container *ngIf="error === authFormError.WrongValues">
+                Неверные логин или пароль
+            </ng-container>
+            <ng-container *ngIf="error === authFormError.InvalidForm">
+                Введите логин и пароль
+            </ng-container>
+        </span>
+    </div>
+
+    <button tpButton #submitButton
+        [disabled]="error$ | async">
+        Войти
+    </button>
+</form>

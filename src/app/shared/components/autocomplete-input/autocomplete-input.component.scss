@@ -1,0 +1,67 @@
+@import 'placeholders';
+
+:host {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  width: 500px;
+
+  .input-container {
+    height: 54px;
+    padding: 0 15px;
+    border-radius: 8px;
+    box-sizing: border-box;
+
+    background: var(--theme-white-1000-color);
+    box-shadow: var(--default-shadow);
+    transition: var(--base-transition);
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &.open {
+      border-radius: 8px 8px 0 0;
+    }
+
+    input {
+      @extend %base-font14-normal;
+
+      width: 0;
+      flex-grow: 1;
+    }
+  }
+
+  .options-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+
+    width: 100%;
+    padding: 10px 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    background: var(--theme-white-1000-color);
+    box-shadow: var(--default-shadow);
+
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+
+    .option {
+      @extend %base-font14-normal;
+
+      min-height: 35px;
+      padding: 0 15px;
+
+      display: flex;
+      align-items: center;
+
+      color: var(--text-dark-color);
+    }
+  }
+}

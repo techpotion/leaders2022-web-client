@@ -1,0 +1,44 @@
+<div class="animation-container"
+     [@open]="animationState | async"
+     (@open.start)="animationInProgress.next(true)"
+     (@open.done)="animationInProgress.next(false)"
+     (mouseenter)="mouseenter.emit()"
+     (mouseleave)="mouseleave.emit()">
+
+    <button *ngIf="(isOpen | async) === false"
+            class="toggle-button">
+        <img class="button-content"
+             src="assets/icons/question.svg"
+             alt="legend">
+    </button>
+
+    <div class="legend-container"
+         *ngIf="isOpen | async">
+        <div class="element-container">
+            <img src="assets/icons/red-marker.svg" alt="">
+            <span>аномальная заявка</span>
+        </div>
+        <div class="element-container">
+            <img src="assets/icons/red-circle.svg" alt="">
+            <span>кластер с аномальными заявками</span>
+        </div>
+
+        <div class="element-container">
+            <img src="assets/icons/maroon-marker.svg" alt="">
+            <span>аномальный инцидент</span>
+        </div>
+        <div class="element-container">
+            <img src="assets/icons/orange-circle.svg" alt="">
+            <span>кластер с аномальными и корректно закрытыми заявками</span>
+        </div>
+
+        <div class="element-container">
+            <img src="assets/icons/green-marker.svg" alt="">
+            <span>корректно закрытая заявка</span>
+        </div>
+        <div class="element-container">
+            <img src="assets/icons/green-circle.svg" alt="">
+            <span>кластер с корректно закрытыми заявками</span>
+        </div>
+    </div>
+</div>

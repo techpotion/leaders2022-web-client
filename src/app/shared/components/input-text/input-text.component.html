@@ -1,0 +1,5 @@
+<input type="text" #input
+       [formControl]="control"
+       (blur)="onTouched()"
+       (keydown.enter)="onEnterKeydown($event)"
+       [id]="inputId">

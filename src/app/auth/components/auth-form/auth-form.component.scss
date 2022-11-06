@@ -1,0 +1,64 @@
+@import 'placeholders';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+
+  .title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+
+    .illustration {
+      width: 100px;
+    }
+
+    .title {
+      @extend %base-font18-normal;
+      color: var(--text-dark-color);
+    }
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+
+    @extend %base-font14-normal;
+
+    .input-error-container {
+      position: relative;
+      margin-bottom: calc(1.5em + 4px);
+
+      .input-container {
+        position: relative;
+        z-index: 1;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+
+        .username-input-container,
+        .password-input-container {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+      }
+
+      .input-error {
+        position: absolute;
+        left: 0;
+        z-index: 0;
+        bottom: calc(-1.5em - 4px);
+
+        color: var(--red-color);
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+<div class="background">
+    <img class="illustration"
+         src="assets/illustrations/city.png"
+         alt="">
+    <div class="white-filter"></div>
+    <div class="blur-filter"></div>
+</div>
+
+<tp-card [@slideEntering]>
+    <tp-auth-form
+        (authorization)="onAuthorization()">
+    </tp-auth-form>
+</tp-card>

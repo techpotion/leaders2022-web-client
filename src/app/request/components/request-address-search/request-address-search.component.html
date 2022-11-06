@@ -1,0 +1,8 @@
+<ng-container [formGroup]="data.form">
+    <ng-container formGroupName="filter">
+        <tp-autocomplete-input class="input"
+                               formControlName="address"
+                               [options]="(addresses | async) ?? []">
+        </tp-autocomplete-input>
+    </ng-container>
+</ng-container>

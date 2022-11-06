@@ -1,0 +1,22 @@
+:host {
+  height: 54px;
+  min-width: 50px;
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #2D644C;
+  box-shadow: var(--default-shadow);
+
+  transition: var(--base-transition);
+
+  &:hover {
+    background: #235A43;
+  }
+
+  &:active {
+    background: var(--green-dark-color);
+  }
+}

@@ -1,0 +1,286 @@
+@import 'placeholders';
+
+:host {
+  padding: 25px;
+  box-sizing: border-box;
+  border-radius: 8px;
+
+  background: var(--theme-white-1000-color);
+  box-shadow: var(--default-shadow);
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  .brief-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .heading-container {
+      width: 100%;
+      box-sizing: border-box;
+
+      &.short {
+        padding-right: 24px;
+      }
+
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+
+      .text-container {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        .number {
+          @extend %tertiary-font12-normal;
+          color: var(--neutral-400-color);
+        }
+
+        .open-toggle {
+          @extend %base-font16-bold;
+          color: var(--basic-1100-color);
+          text-align: start;
+
+          transition: var(--base-transition);
+
+          &:hover {
+            opacity: .8;
+            color: var(--green-dark-color);
+          }
+
+          &:active {
+            opacity: 1;
+          }
+        }
+      }
+
+      .anomaly-container {
+        height: 41px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+
+        .probability {
+          @extend %tertiary-font14-semibold;
+
+          color: var(--theme-secondary-800-color);
+        }
+
+        .mark-anomaly {
+          width: 24px;
+          min-height: 24px;
+          border-radius: 12px;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          box-shadow: var(--default-shadow);
+
+          path {
+            transition: var(--base-transition);
+          }
+
+          &:hover {
+            path {
+              opacity: 1;
+            }
+          }
+
+          &:active {
+            path {
+              stroke-width: 1px;
+            }
+          }
+        }
+      }
+    }
+
+    .badges-container {
+      display: flex;
+      gap: 10px;
+
+      .badge {
+        @extend %tertiary-font14-medium;
+
+        padding: 4px 9px;
+        border-radius: 12px;
+
+        background: #F0F6ED;
+
+        color: var(--text-dark-color);
+
+        &.bad {
+          background: #FFF3F3;
+        }
+
+        &.has-anomaly-badge {
+          @extend %tertiary-font14-bold;
+        }
+
+        &.anomaly-badge {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+
+          .faq-button {
+            width: 12px;
+            height: 12px;
+
+            path {
+              transition: var(--base-transition);
+            }
+
+            &:hover {
+              path {
+                opacity: 1;
+              }
+            }
+
+            &:active {
+              path {
+                stroke-width: 0.5px;
+              }
+            }
+          }
+
+          .value {
+            @extend %tertiary-font14-normal;
+          }
+        }
+      }
+    }
+
+    .address-container {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+
+      .left-container {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .icon-container {
+          min-width: 36px;
+          height: 36px;
+          border-radius: 8px;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          transition: var(--base-transition);
+          background: #f0f6ed;
+
+          &.bad {
+            background: #fff3f3;
+          }
+        }
+      }
+
+      .badges-container {
+        display: flex;
+        gap: 5px;
+
+        .badge {
+          @extend %tertiary-font12-normal;
+
+          padding: 2px 6px;
+          width: min-content;
+          box-sizing: border-box;
+          border-radius: 10px;
+
+          background: rgba(129, 202, 147, .25);
+          color: var(--text-color-default);
+
+          &.district-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            .dot {
+              width: 6px;
+              height: 6px;
+              border-radius: 3px;
+
+              background: #297551;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .property-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .property-name {
+      @extend %tertiary-font14-medium;
+
+      color: var(--neutral-500-color);
+    }
+
+    .property-value {
+      @extend %tertiary-font14-semibold;
+
+      color: var(--text-dark-color);
+    }
+  }
+
+  .full-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .partition-container {
+      display: flex;
+      gap: 15px;
+
+      .icon-container {
+        min-width: 30px;
+      }
+
+      .properties {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    .close-button-container {
+      display: flex;
+      justify-content: flex-end;
+
+      .close-button {
+        @extend %tertiary-font14-normal;
+
+        color: var(--green-dark-color);
+        opacity: .7;
+
+        transition: var(--base-transition);
+
+        &:hover {
+          @extend %tertiary-font14-medium;
+
+          opacity: .8;
+        }
+
+        &:active {
+          @extend %tertiary-font14-medium;
+
+          opacity: .8;
+        }
+      }
+    }
+  }
+}
