@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnDestroy, Output } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, combineLatest, map } from 'rxjs';
 import { MarkerRequest } from '../../models/map/marker-request';
 import { RequestViewService } from '../../services/request-view.service';
 
@@ -69,6 +69,31 @@ export class RequestClusterPopupComponent implements OnDestroy {
 
   public readonly normalRequestsCount = this.normalRequests.pipe(
     map(requests => requests.length),
+  );
+
+  public readonly groupedRequests = combineLatest([
+    this.incidentRequests.pipe(
+      map(requests => requests.map(request => ({
+        ...request,
+        image: 'assets/icons/maroon-marker.svg',
+      }))),
+    ),
+    this.anomalyRequests.pipe(
+      map(requests => requests.map(request => ({
+        ...request,
+        image: 'assets/icons/red-marker.svg',
+      }))),
+    ),
+    this.normalRequests.pipe(
+      map(requests => requests.map(request => ({
+        ...request,
+        image: 'assets/icons/green-marker.svg',
+      }))),
+    ),
+  ]).pipe(
+    map(([incidents, anomalies, normals]) => [
+      ...incidents, ...anomalies, ...normals,
+    ]),
   );
 
   // #endregion

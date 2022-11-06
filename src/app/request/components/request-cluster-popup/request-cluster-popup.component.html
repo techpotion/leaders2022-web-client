@@ -18,52 +18,22 @@
     </div>
 </div>
 
-<div class="list-container">
-    <div class="request-list incident"
-        *ngIf="incidentRequestsCount | async">
-        <div class="request"
-            *ngFor="let request of incidentRequests | async">
-            <img src="assets/icons/maroon-marker.svg" alt="">
+<cdk-virtual-scroll-viewport
+        class="request-list"
+        *ngIf="groupedRequests | async as requests"
+        [itemSize]="40"
+        [minBufferPx]="100"
+        [maxBufferPx]="150">
+    <div class="request"
+         *cdkVirtualFor="let request of requests">
+        <img [src]="request.image" alt="">
 
-            <div class="text-container">
-                <span class="number">{{ request.number }}</span>
-                <button class="open-toggle"
+        <div class="text-container">
+            <span class="number">{{ request.number }}</span>
+            <button class="open-toggle"
                     (click)="openFull(request)">
-                    {{ request.deffect.shortName }}
-                </button>
-            </div>
+                {{ request.deffect.shortName }}
+            </button>
         </div>
     </div>
-
-    <div class="request-list anomaly"
-        *ngIf="anomalyRequestsCount | async">
-        <div class="request"
-            *ngFor="let request of anomalyRequests | async">
-            <img src="assets/icons/red-marker.svg" alt="">
-
-            <div class="text-container">
-                <span class="number">{{ request.number }}</span>
-                <button class="open-toggle"
-                    (click)="openFull(request)">
-                    {{ request.deffect.shortName }}
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="request-list normal"
-        *ngIf="normalRequestsCount | async">
-        <div class="request"
-            *ngFor="let request of normalRequests | async">
-            <img src="assets/icons/green-marker.svg" alt="">
-
-            <div class="text-container">
-                <span class="number">{{ request.number }}</span>
-                <button class="open-toggle"
-                    (click)="openFull(request)">
-                    {{ request.deffect.shortName }}
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+</cdk-virtual-scroll-viewport>
