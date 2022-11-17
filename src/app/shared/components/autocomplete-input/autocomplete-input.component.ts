@@ -1,3 +1,4 @@
+import { animate, query, sequence, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, ViewChild } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BehaviorSubject, combineLatest, map, startWith, takeUntil } from 'rxjs';
@@ -16,6 +17,30 @@ const MAX_VISIBLE_OPTIONS = 5;
       useExisting: forwardRef(() => AutocompleteInputComponent),
       multi: true,
     },
+  ],
+  animations: [
+    trigger('optionsAppearance', [
+      transition(':enter', [
+        style({ height: 0 }),
+        query('.option', style({ opacity: 0 })),
+        sequence([
+          animate('.2s ease-out', style({ height: '*' })),
+          query(
+            '.option',
+            animate('.2s ease-out', style({ opacity: '*' })),
+          ),
+        ]),
+      ]),
+      transition(':leave', [
+        sequence([
+          query(
+            '.option',
+            animate('.2s ease-out', style({ opacity: 0 })),
+          ),
+          animate('.2s ease-out', style({ height: 0 })),
+        ]),
+      ]),
+    ]),
   ],
 })
 export class AutocompleteInputComponent

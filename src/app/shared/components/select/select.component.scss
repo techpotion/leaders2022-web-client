@@ -4,15 +4,14 @@
   position: relative;
 
   .input-container {
-    height: 54px;
-    padding: 0 15px;
+    height: 40px;
+    padding: 0 10px;
     border-radius: 8px;
     box-sizing: border-box;
 
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
 
     background: var(--theme-white-1000-color);
     box-shadow: var(--default-shadow);
@@ -31,10 +30,12 @@
     }
 
     .text {
-      @extend %base-font14-normal;
+      @extend %base-font12-normal;
 
       transition: var(--base-transition);
       width: 0;
+      margin-left: 5px;
+      margin-right: 10px;
       flex-grow: 1;
 
       &:disabled {
@@ -67,8 +68,8 @@
     }
 
     .open-button, .faq-button {
-      width: 20px;
-      height: 20px;
+      width: 15px;
+      height: 15px;
 
       path {
         transition: var(--base-transition);
@@ -96,32 +97,60 @@
 
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
 
+    width: 100%;
     padding: 10px;
-    max-height: 300px;
+    max-height: 310px;
     border-radius: 8px;
-    box-shadow: var(--2x-shadow);
+    box-sizing: border-box;
 
     overflow: auto;
 
+    box-shadow: var(--2x-shadow);
     background: var(--theme-white-1000-color);
 
+    &.virtual-scroll-inside {
+      height: 310px;
+      overflow: none;
+    }
+
+    .scroll-container {
+      height: 100%;
+    }
+
     .option {
-      min-height: 35px;
+      width: 100%;
+      min-height: 30px;
+      padding: 2px;
       padding-right: 10px;
       padding-left: 5px;
       box-sizing: border-box;
+      border-radius: 8px;
 
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 5px;
+
+      transition: var(--base-transition);
 
       span {
-        @extend %base-font14-normal;
+        @extend %base-font12-normal;
 
         text-align: start;
         color: var(--text-dark-color);
+        hyphens: auto;
+
+        width: 0;
+        flex-grow: 1;
+      }
+
+      &:hover {
+        background: #F3F8F3;
+      }
+
+      &:active {
+        background: #E9F1E8;
       }
     }
   }

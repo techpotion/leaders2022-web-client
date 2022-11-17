@@ -1,8 +1,8 @@
 <button class="open-button"
-    [class.selected]="selected | async"
-    (click)="toggleIsOpen()">
-    <svg width="28"
-         height="28"
+        [class.selected]="selected | async"
+        (click)="toggleIsOpen()">
+    <svg width="20"
+         height="20"
          viewBox="0 0 28 28"
          fill="none"
          xmlns="http://www.w3.org/2000/svg">
@@ -14,128 +14,131 @@
     </svg>
 </button>
 
-<div class="select-container"
+<div class="animation-select-container"
+    [@selectContainerAppearance]
     *ngIf="isOpen | async">
-    <div class="group">
-        <span class="group-heading">
-            По аномальности
-        </span>
+    <div class="select-container">
+        <div class="group">
+            <span class="group-heading">
+                По аномальности
+            </span>
 
-        <div class="option-container">
-            <button class="option"
-                (click)="setGroupOption(groupOption.NormalFirst)">
-                <button tpRadiobutton
-                    (click)="setGroupOption(groupOption.NormalFirst)"
-                    [selected]="(groupControl | async) === groupOption.NormalFirst">
+            <div class="option-container">
+                <button class="option"
+                        (click)="setGroupOption(groupOption.NormalFirst)">
+                    <button tpRadiobutton
+                            (click)="setGroupOption(groupOption.NormalFirst)"
+                            [selected]="(groupControl | async) === groupOption.NormalFirst">
+                    </button>
+                    <span class="option-text">
+                        Сначала не аномальные
+                    </span>
                 </button>
-                <span class="option-text">
-                    Сначала не аномальные
-                </span>
-            </button>
 
-            <button class="option"
-                (click)="setGroupOption(groupOption.AnomalyFirst)">
-                <button tpRadiobutton
-                    (click)="setGroupOption(groupOption.AnomalyFirst)"
-                    [selected]="(groupControl | async) === groupOption.AnomalyFirst">
+                <button class="option"
+                        (click)="setGroupOption(groupOption.AnomalyFirst)">
+                    <button tpRadiobutton
+                            (click)="setGroupOption(groupOption.AnomalyFirst)"
+                            [selected]="(groupControl | async) === groupOption.AnomalyFirst">
+                    </button>
+                    <span class="option-text">
+                        Сначала аномальные
+                    </span>
                 </button>
-                <span class="option-text">
-                    Сначала аномальные
-                </span>
-            </button>
+            </div>
         </div>
-    </div>
 
-    <div class="group">
-        <span class="group-heading">
-            По времени
-        </span>
+        <div class="group">
+            <span class="group-heading">
+                По времени
+            </span>
 
-        <div class="option-container">
-            <button class="option"
-                (click)="setSortOption(sortOption.CreationDateDescending)">
-                <button tpRadiobutton
-                    (click)="setSortOption(sortOption.CreationDateDescending)"
-                    [selected]="(sortControl | async) === sortOption.CreationDateDescending">
+            <div class="option-container">
+                <button class="option"
+                        (click)="setSortOption(sortOption.CreationDateDescending)">
+                    <button tpRadiobutton
+                            (click)="setSortOption(sortOption.CreationDateDescending)"
+                            [selected]="(sortControl | async) === sortOption.CreationDateDescending">
+                    </button>
+                    <span class="option-text">
+                        По времени открытия (сначала новые)
+                    </span>
                 </button>
-                <span class="option-text">
-                    По времени открытия (сначала новые)
-                </span>
-            </button>
 
-            <button class="option"
-                (click)="setSortOption(sortOption.CreationDateAscending)">
-                <button tpRadiobutton
-                        (click)="setSortOption(sortOption.CreationDateAscending)"
-                    [selected]="(sortControl | async) === sortOption.CreationDateAscending">
+                <button class="option"
+                        (click)="setSortOption(sortOption.CreationDateAscending)">
+                    <button tpRadiobutton
+                            (click)="setSortOption(sortOption.CreationDateAscending)"
+                            [selected]="(sortControl | async) === sortOption.CreationDateAscending">
+                    </button>
+                    <span class="option-text">
+                        По времени открытия (сначала старые)
+                    </span>
                 </button>
-                <span class="option-text">
-                    По времени открытия (сначала старые)
-                </span>
-            </button>
 
-            <button class="option"
-                (click)="setSortOption(sortOption.CloseDateDescending)">
-                <button tpRadiobutton
-                        (click)="setSortOption(sortOption.CloseDateDescending)"
-                    [selected]="(sortControl | async) === sortOption.CloseDateDescending">
+                <button class="option"
+                        (click)="setSortOption(sortOption.CloseDateDescending)">
+                    <button tpRadiobutton
+                            (click)="setSortOption(sortOption.CloseDateDescending)"
+                            [selected]="(sortControl | async) === sortOption.CloseDateDescending">
+                    </button>
+                    <span class="option-text">
+                        По времени закрытия (сначала новые)
+                    </span>
                 </button>
-                <span class="option-text">
-                    По времени закрытия (сначала новые)
-                </span>
-            </button>
 
-            <button class="option"
-                (click)="setSortOption(sortOption.CloseDateAscending)">
-                <button tpRadiobutton
-                        (click)="setSortOption(sortOption.CloseDateAscending)"
-                    [selected]="(sortControl | async) === sortOption.CloseDateAscending">
+                <button class="option"
+                        (click)="setSortOption(sortOption.CloseDateAscending)">
+                    <button tpRadiobutton
+                            (click)="setSortOption(sortOption.CloseDateAscending)"
+                            [selected]="(sortControl | async) === sortOption.CloseDateAscending">
+                    </button>
+                    <span class="option-text">
+                        По времени закрытия (сначала старые)
+                    </span>
                 </button>
-                <span class="option-text">
-                    По времени закрытия (сначала старые)
-                </span>
-            </button>
+            </div>
         </div>
-    </div>
 
-    <div class="group">
-        <span class="group-heading">
-            По параметрам
-        </span>
+        <div class="group">
+            <span class="group-heading">
+                По параметрам
+            </span>
 
-        <div class="option-container">
-            <button class="option"
-                (click)="setGroupOption(groupOption.IncidentFirst)">
-                <button tpRadiobutton
-                    (click)="setGroupOption(groupOption.IncidentFirst)"
-                    [selected]="(groupControl | async) === groupOption.IncidentFirst">
+            <div class="option-container">
+                <button class="option"
+                        (click)="setGroupOption(groupOption.IncidentFirst)">
+                    <button tpRadiobutton
+                            (click)="setGroupOption(groupOption.IncidentFirst)"
+                            [selected]="(groupControl | async) === groupOption.IncidentFirst">
+                    </button>
+                    <span class="option-text">
+                        Сначала инциденты
+                    </span>
                 </button>
-                <span class="option-text">
-                    Сначала инциденты
-                </span>
-            </button>
 
-            <button class="option"
-                (click)="setGroupOption(groupOption.Urgency)">
-                <button tpRadiobutton
-                    (click)="setGroupOption(groupOption.Urgency)"
-                    [selected]="(groupControl | async) === groupOption.Urgency">
+                <button class="option"
+                        (click)="setGroupOption(groupOption.Urgency)">
+                    <button tpRadiobutton
+                            (click)="setGroupOption(groupOption.Urgency)"
+                            [selected]="(groupControl | async) === groupOption.Urgency">
+                    </button>
+                    <span class="option-text">
+                        По срочности
+                    </span>
                 </button>
-                <span class="option-text">
-                    По срочности
-                </span>
-            </button>
 
-            <button class="option"
-                (click)="setGroupOption(groupOption.Deffect)">
-                <button tpRadiobutton
-                    (click)="setGroupOption(groupOption.Deffect)"
-                    [selected]="(groupControl | async) === groupOption.Deffect">
+                <button class="option"
+                        (click)="setGroupOption(groupOption.Deffect)">
+                    <button tpRadiobutton
+                            (click)="setGroupOption(groupOption.Deffect)"
+                            [selected]="(groupControl | async) === groupOption.Deffect">
+                    </button>
+                    <span class="option-text">
+                        По дефекту
+                    </span>
                 </button>
-                <span class="option-text">
-                    По дефекту
-                </span>
-            </button>
+            </div>
         </div>
     </div>
 </div>

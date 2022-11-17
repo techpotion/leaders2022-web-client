@@ -14,7 +14,6 @@ import { RequestsFiltersComponent } from './components/requests-filters/requests
 import { RequestAddressSearchComponent } from './components/request-address-search/request-address-search.component';
 import { RequestsListComponent } from './components/requests-list/requests-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RequestsFiltersUpdateButtonComponent } from './components/requests-filters-update-button/requests-filters-update-button.component';
 import { RequestsBriefAnalyticsComponent } from './components/requests-brief-analytics/requests-brief-analytics.component';
 import { RequestCardComponent } from './components/request-card/request-card.component';
 import { AnomalyModule } from '../anomaly/anomaly.module';
@@ -22,6 +21,7 @@ import { RequestMarkerPopupComponent } from './components/request-marker-popup/r
 import { RequestClusterPopupComponent } from './components/request-cluster-popup/request-cluster-popup.component';
 import { RequestHeatmapToggleComponent } from './components/request-heatmap-toggle/request-heatmap-toggle.component';
 import { SortNGroupControlComponent } from './components/sort-n-group-control/sort-n-group-control.component';
+import { AnomalyOnlyToggleComponent } from './components/anomaly-only-toggle/anomaly-only-toggle.component';
 
 
 @NgModule({
@@ -34,13 +34,13 @@ import { SortNGroupControlComponent } from './components/sort-n-group-control/so
     RequestsFiltersComponent,
     RequestAddressSearchComponent,
     RequestsListComponent,
-    RequestsFiltersUpdateButtonComponent,
     RequestsBriefAnalyticsComponent,
     RequestCardComponent,
     RequestMarkerPopupComponent,
     RequestClusterPopupComponent,
     RequestHeatmapToggleComponent,
     SortNGroupControlComponent,
+    AnomalyOnlyToggleComponent,
   ],
   imports: [
     RequestRoutingModule,

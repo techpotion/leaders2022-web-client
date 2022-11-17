@@ -22,6 +22,7 @@
 
             <button class="mark-anomaly"
                     *ngIf="markingButtonVisible | async"
+                    [@opacityAppearance]
                     (click)="toggleAnomalyMark()">
                 <svg width="13"
                      height="13"
@@ -123,7 +124,8 @@
     </div>
 </div>
 
-<div class="full-container" *ngIf="isFullOpen | async">
+<div class="full-container" [@fullOpen]
+    *ngIf="isFullOpen | async">
     <div class="partition-container"
         *ngIf="request?.creationDate && request?.closeDate">
         <div class="icon-container">
@@ -288,12 +290,6 @@
                 <span class="property-name">ИНН организации-исполнителя</span>
                 <span class="property-value">{{ request?.performingOrganization?.inn }}</span>
             </div>
-
-            <div class="property-container" *ngIf="request?.performingOrganization?.name">
-                <span class="property-name">Идентификатор организации-исполнителя</span>
-                <span class="property-value">{{ request?.performingOrganization?.name }}</span>
-            </div>
-
         </div>
     </div>
 

@@ -13,25 +13,30 @@ import * as _ from 'lodash';
 import { RequestGroupOption, RequestSortOption } from '../models/request-sort-options';
 import { sortRequests } from '../utils/sort-requests';
 import { groupRequests } from '../utils/group-requests';
-// import {RequestsMapEventService} from './requests-map-event.service';
+import { isNotNil } from 'src/app/shared/utils/is-not-nil';
+import { Urgency } from '../models/urgency';
 
 
-// const MAP_RENDER_DEBOUNCE_PERIOD = 300;
-
-interface UpdateForm {
+interface BackendFilterForm {
   datetimeRange: ValueRange<Date> | null;
   region: SelectOption<string>[] | null;
+  services: SelectOption<string>[];
+  efficiencies: SelectOption<string>[];
+  grades: SelectOption<string>[];
+  urgencies: SelectOption<Urgency>[];
+  works: SelectOption<string>[];
+  deffects: SelectOption<string>[];
+  owners: SelectOption<string>[];
+}
+
+interface FrontendFilterForm {
+  address: string;
+  anomalyCases: SelectOption<number>[];
 }
 
 interface FilterForm {
-  address: string;
-  anomalyCases: SelectOption<number>[];
-  urgency: SelectOption<string>[] | null;
-}
-
-interface Form {
-  update?: UpdateForm;
-  filter?: FilterForm;
+  backend?: BackendFilterForm;
+  frontend?: FrontendFilterForm;
 }
 
 @Injectable({
@@ -42,8 +47,6 @@ export class RequestsDataService {
   constructor(
     private readonly anomalyApi: AnomalyApiService,
     private readonly fb: FormBuilder,
-    // private readonly mapControl: RequestsMapControlService,
-    // private readonly mapEvents: RequestsMapEventService,
     private readonly requestApi: RequestApiService,
     private readonly loading: LoadingService,
   ) { }
@@ -52,17 +55,24 @@ export class RequestsDataService {
   // #region Inputs
 
   public readonly form = this.fb.group({
-    update: this.fb.group({
+    backendFilters: this.fb.group({
       datetimeRange: [null as ValueRange<Date> | null, [Validators.required]],
       region: [null as SelectOption<string>[] | null, [Validators.required]],
+      services: [[] as SelectOption<string>[]],
+      efficiencies: [[] as SelectOption<string>[]],
+      grades: [[] as SelectOption<string>[]],
+      urgencies: [[] as SelectOption<Urgency>[]],
+      works: [[] as SelectOption<string>[]],
+      deffects: [[] as SelectOption<string>[]],
+      owners: [[] as SelectOption<string>[]],
     }),
-    filter: this.fb.group({
+    frontendFilters: this.fb.group({
       address: [''],
       anomalyCases: [[] as SelectOption<number>[]],
-      urgency: [null as SelectOption<string>[] | null],
     }),
+    anomalyOnlyFilter: [false],
     sort: [{
-      group: RequestGroupOption.AnomalyFirst as RequestGroupOption | null,
+      group: null as RequestGroupOption | null,
       sort: RequestSortOption.CloseDateDescending as RequestSortOption | null,
     }],
   });
@@ -70,9 +80,21 @@ export class RequestsDataService {
   /**
    * Form state when updates were loaded.
    */
-  public readonly updateFormState: Form = {};
+  public updateFormState: FilterForm = {};
+
+  public clearFormState(): void {
+    this.updateFormState = {};
+  }
 
   public readonly reload = new EventEmitter<void>();
+
+  public get region(): string | null {
+    const regionValue = this.form.value.backendFilters?.region;
+    if (!regionValue) { return null; }
+    const regionOption = regionValue.at(0) as SelectOption<string> | null;
+    if (!regionOption) { return null; }
+    return regionOption.value;
+  }
 
   // #endregion
 
@@ -106,20 +128,31 @@ export class RequestsDataService {
 
   public readonly loadedRequests = this.reload.pipe(
     filter(() => !_.isEqual(
-      this.form.value.update,
-      this.updateFormState.update,
+      this.form.value.backendFilters,
+      this.updateFormState.backend,
     )),
     tap(() => void this.loading.openLoader(
       'Загружаем заявки. Осталось еще немного.',
     )),
-    switchMap(() => this.getFullRequests({
+    map(() => this.form.value.backendFilters),
+    filter(isNotNil),
+    switchMap(filters => this.getFullRequests({
       /* eslint-disable */
-      region: (this.form.value.update?.region?.at(0) as SelectOption<string> | null)?.value!,
-      datetimeRange: this.form.value.update?.datetimeRange!,
+      region: this.region!,
+      datetimeRange: filters.datetimeRange!,
       /* eslint-enable */
+      service: filters.services?.map(option => option.value) ?? undefined,
+      efficiency: filters.efficiencies?.map(option => option.value)
+        ?? undefined,
+      grade: filters.grades?.map(option => option.value) ?? undefined,
+      urgency: filters.urgencies?.map(option => option.value) ?? undefined,
+      work: filters.works?.map(option => option.value) ?? undefined,
+      deffect: filters.deffects?.map(option => option.value) ?? undefined,
+      owner: filters.owners?.map(option => option.value) ?? undefined,
     })),
     tap(() => {
-      this.updateFormState.update = this.form.value.update as UpdateForm;
+      this.updateFormState.backend =
+        this.form.value.backendFilters as BackendFilterForm;
     }),
   );
 
@@ -148,11 +181,11 @@ export class RequestsDataService {
   private readonly filteredRequests = this.markedRequests.pipe(
     switchMap(fullRequests => this.reload.pipe(
       filter(() => _.isEqual(
-        this.form.value.update,
-        this.updateFormState.update,
+        this.form.value.backendFilters,
+        this.updateFormState.backend,
       ) && !_.isEqual(
-        this.form.value.filter,
-        this.updateFormState.filter,
+        this.form.value.frontendFilters,
+        this.updateFormState.frontend,
       )),
       tap(() => void this.loading.openLoader(
         'Загружаем заявки. Осталось еще немного.',
@@ -161,17 +194,13 @@ export class RequestsDataService {
       map(() => fullRequests),
     )),
     map(fullRequests => fullRequests.filter(request => {
-      const address = this.form.value.filter?.address?.toLowerCase().trim()
+      const address =
+        this.form.value.frontendFilters?.address?.toLowerCase().trim()
         ?? '';
       return request.address.full.toLowerCase().includes(address);
     })),
     map(fullRequests => fullRequests.filter(request => {
-      const urgency = this.form.value.filter?.urgency as SelectOption[] | null;
-      if (!urgency) { return request; }
-      return request.urgency.ru === urgency.at(0)?.value;
-    })),
-    map(fullRequests => fullRequests.filter(request => {
-      const cases = this.form.value.filter?.anomalyCases;
+      const cases = this.form.value.frontendFilters?.anomalyCases;
       if (!cases?.length) { return request; }
       for (const anomalyCase of cases) {
         if (request.anomaly.cases.includes(anomalyCase.value)) {
@@ -181,11 +210,24 @@ export class RequestsDataService {
       return false;
     })),
     tap(() => {
-      this.updateFormState.filter = this.form.value.filter as FilterForm;
+      this.updateFormState.frontend =
+        this.form.value.frontendFilters as FrontendFilterForm;
     }),
   );
 
-  private readonly sortedRequests = this.filteredRequests.pipe(
+  private readonly anomalyFilteredRequests = this.filteredRequests.pipe(
+    switchMap(
+      fullRequests => this.form.controls.anomalyOnlyFilter.valueChanges.pipe(
+        startWith(this.form.controls.anomalyOnlyFilter.value),
+        map(anomalyOnly => fullRequests.filter(request => {
+          if (!anomalyOnly) { return true; }
+          return request.anomaly.exists;
+        })),
+      ),
+    ),
+  );
+
+  private readonly sortedRequests = this.anomalyFilteredRequests.pipe(
     switchMap(fullRequests => this.form.controls.sort.valueChanges.pipe(
       startWith(this.form.controls.sort.value),
       map(sortForm => {

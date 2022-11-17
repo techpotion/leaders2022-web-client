@@ -20,12 +20,18 @@ export class RequestsMapEventService {
   public init(map: mapboxgl.Map): void {
     // Lifecycle
     this.init$.emit(map);
-    map.on('load', event => this.load$.emit(event));
+    this.isLoaded = false;
+    map.on('load', event => {
+      this.load$.emit(event);
+      this.isLoaded = true;
+    });
     map.on('render', event => this.render$.emit(event));
 
     // Loading data
     map.on('sourcedata', event => this.sourceLoadComplete$.emit(event));
   }
+
+  public isLoaded = false;
 
   // #endregion
 

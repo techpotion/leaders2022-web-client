@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnDestroy, Output } from '@angular/core';
-import { BehaviorSubject, combineLatest, map } from 'rxjs';
+import { BehaviorSubject, combineLatest, filter, first, map } from 'rxjs';
 import { MarkerRequest } from '../../models/map/marker-request';
 import { RequestViewService } from '../../services/request-view.service';
 
@@ -102,10 +102,13 @@ export class RequestClusterPopupComponent implements OnDestroy {
   // #region Actions
 
   public openFull(request: MarkerRequest): void {
-    if (!this.view.listVisible.value) {
-      this.view.toggleList();
+    if (this.view.listAnimationState.value !== 'opened') {
+      this.view.toggleList(true);
     }
-    setTimeout(() => void this.view.scrollToRequest(request.id));
+    this.view.listAnimationState.pipe(
+      filter(state => state === 'opened'),
+      first(),
+    ).subscribe(() => void this.view.scrollToRequest(request.id));
   }
 
   @Output()

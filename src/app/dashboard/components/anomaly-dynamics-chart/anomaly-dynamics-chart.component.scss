@@ -1,0 +1,54 @@
+@import 'placeholders';
+
+:host {
+  background: var(--theme-white-1000-color);
+  box-shadow: var(--default-shadow);
+
+  width: 0;
+  flex-grow: 1;
+  padding: 15px;
+  border-radius: 8px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  .heading {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    span {
+      @extend %tertiary-font12-medium;
+      color: #767F8B;
+      text-transform: uppercase;
+    }
+  }
+
+  .content {
+    height: 0;
+    flex-grow: 1;
+
+    * {
+      height: 100%;
+      width: 100%;
+    }
+
+    .empty-content {
+      @extend %tertiary-font12-medium;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+      text-transform: uppercase;
+      color: var(--text-muted-color);
+    }
+
+    .chart-canvas {
+      height: 100% !important;
+    }
+  }
+}
+

@@ -1,33 +1,37 @@
 @import 'placeholders';
 
 :host {
-  height: 100px;
+  height: 80px;
 
   display: flex;
-  gap: 15px;
+  gap: 10px;
 
   .card {
     height: 100%;
-    padding-left: 20px;
+    padding-left: 15px;
     box-sizing: border-box;
     border-radius: 12px;
 
     display: flex;
     flex-grow: 1;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 
     background: var(--theme-white-1000-color);
     box-shadow: var(--default-shadow);
 
     .icon-container {
-      width: 45px;
-      height: 45px;
+      width: 36px;
+      height: 36px;
       border-radius: 8px;
 
       display: flex;
       align-items: center;
       justify-content: center;
+
+      img {
+        width: 20px;
+      }
     }
 
     .text-container {
@@ -38,11 +42,11 @@
       color: var(--text-dark-color);
 
       .heading {
-        @extend %base-font14-normal;
+        @extend %base-font12-normal;
       }
 
       .number {
-        @extend %base-font24-bold;
+        @extend %base-font20-bold;
       }
     }
 

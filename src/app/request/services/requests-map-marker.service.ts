@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import { delay, fromEvent, Observable, takeUntil } from 'rxjs';
+import { delay, first, fromEvent, Observable, takeUntil } from 'rxjs';
 import { ComponentRenderService } from 'src/app/shared/services/component-render.service';
 import { LatLng } from '../models/lat-lng';
 import { MarkerImageSource, MarkerLayer, MarkerLayerSource, PopupSource } from '../models/map/marker-layer';
@@ -32,7 +32,18 @@ export class RequestsMapMarkerService {
 
   public init(map: mapboxgl.Map): void {
     this.map = map;
+
+    this.events.load$.pipe(
+      first(),
+    ).subscribe(() => {
+      for (const cb of this.loadCallbacks) {
+        cb();
+      }
+      this.loadCallbacks = [];
+    });
   }
+
+  public loadCallbacks: (() => unknown)[] = [];
 
   // #endregion
 
@@ -59,6 +70,11 @@ export class RequestsMapMarkerService {
   }
 
   public removeLayers(): void {
+    if (!this.map || !this.events.isLoaded) {
+      this.loadCallbacks.push(() => this.removeLayers());
+      return;
+    }
+
     for (const layer of this.layers) {
       this.removeLayer(layer);
     }
@@ -118,6 +134,11 @@ export class RequestsMapMarkerService {
     id: string,
     source: MarkerLayerSource<T, MC, CC>,
   ): void {
+    if (!this.map || !this.events.isLoaded) {
+      this.loadCallbacks.push(() => this.addLayer(id, source));
+      return;
+    }
+
     this.data.addSource(id, {
       type: 'geojson',
       data: source.data,
@@ -156,9 +177,6 @@ export class RequestsMapMarkerService {
       },
     });
 
-    if (!this.map) {
-      throw new Error('Cannot add markers. Map is not defined');
-    }
     if (source.cluster.popup) {
       this.addClusterPopups(source.cluster.popup, id, this.map);
     }

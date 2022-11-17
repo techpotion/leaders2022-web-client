@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnDestroy, Output } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, filter, first } from 'rxjs';
+import { DialogService } from 'src/app/core/services/dialog.service';
 import { MarkerRequest } from '../../models/map/marker-request';
 import { RequestViewService } from '../../services/request-view.service';
-import { RequestsPageDialogService } from '../../services/requests-page-dialog.service';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { RequestsPageDialogService } from '../../services/requests-page-dialog.s
 export class RequestMarkerPopupComponent implements OnDestroy {
 
   constructor(
-    public readonly dialog: RequestsPageDialogService,
+    public readonly dialog: DialogService,
     private readonly view: RequestViewService,
   ) { }
 
@@ -46,10 +46,13 @@ export class RequestMarkerPopupComponent implements OnDestroy {
       throw new Error('Cannot open full request. Request is not defined.');
     }
 
-    if (!this.view.listVisible.value) {
-      this.view.toggleList();
+    if (this.view.listAnimationState.value !== 'opened') {
+      this.view.toggleList(true);
     }
-    setTimeout(() => void this.view.scrollToRequest(request.id));
+    this.view.listAnimationState.pipe(
+      filter(state => state === 'opened'),
+      first(),
+    ).subscribe(() => void this.view.scrollToRequest(request.id));
   }
 
   @Output()

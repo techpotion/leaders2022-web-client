@@ -11,6 +11,7 @@
 </div>
 
 <div class="options-container"
+     [@optionsAppearance]
     *ngIf="(isOpen | async) && (searchedOptions | async)?.length">
     <button class="option"
          (click)="selectOption(option)"

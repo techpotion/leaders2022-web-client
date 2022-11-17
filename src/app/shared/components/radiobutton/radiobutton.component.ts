@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BehaviorSubject, takeUntil } from 'rxjs';
@@ -13,6 +14,17 @@ import { BehaviorSubject, takeUntil } from 'rxjs';
       useExisting: forwardRef(() => RadiobuttonComponent),
       multi: true,
     },
+  ],
+  animations: [
+    trigger('contentAppearance', [
+      transition(':enter', [
+        style({ transform: 'scale(0.4)' }),
+        animate('.1s ease-out', style({ transform: '*' })),
+      ]),
+      transition(':leave', [
+        animate('.1s ease-out', style({ transform: 'scale(0.4)' })),
+      ]),
+    ]),
   ],
 })
 export class RadiobuttonComponent

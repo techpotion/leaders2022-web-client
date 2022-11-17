@@ -15,6 +15,8 @@ import { toggleAnimation } from '../../animations/toggle.animation';
 import { SelectOption } from '../../models/select-option';
 
 
+const VIRTUAL_SCROLL_MIN_ITEMS = 50;
+
 @Component({
   selector: 'tp-select',
   templateUrl: './select.component.html',
@@ -148,7 +150,7 @@ implements ControlValueAccessor, OnInit, OnDestroy {
 
   @Input()
   public multiplePlaceholderFn: (options: SelectOption[]) => string
-      = options => `Выбрано вариантов: ${ options.length}`;
+      = options => `Выбрано: ${ options.length}`;
 
   // #endregion
 
@@ -175,6 +177,10 @@ implements ControlValueAccessor, OnInit, OnDestroy {
     )),
   );
 
+  public readonly virtualScrollEnabled = this.searchedOptions.pipe(
+    map(options => options.length >= VIRTUAL_SCROLL_MIN_ITEMS),
+  );
+
   // #endregion
 
 
@@ -184,7 +190,10 @@ implements ControlValueAccessor, OnInit, OnDestroy {
   public placeholder = 'Выбрать';
 
   private subscribeSearchControlValue(): void {
-    this.isOpen.subscribe(isOpen => {
+    combineLatest([
+      this.isOpen,
+      this.searchControlUpdate,
+    ]).subscribe(([isOpen]) => {
       if (isOpen) {
         this.searchControl.setValue('');
         this.searchControl.enable();
@@ -216,6 +225,8 @@ implements ControlValueAccessor, OnInit, OnDestroy {
       this.searchControl.disable();
     });
   }
+
+  private readonly searchControlUpdate = new EventEmitter<void>();
 
   // #endregion
 
@@ -270,9 +281,11 @@ implements ControlValueAccessor, OnInit, OnDestroy {
   public writeValue(obj: SelectOption[] | null): void {
     if (this.multiple) {
       this.multipleControl.next(obj ?? []);
+      this.searchControlUpdate.emit();
       return;
     }
     this.singleControl.setValue(obj?.at(0) ?? null);
+    this.searchControlUpdate.emit();
   }
 
   // eslint-disable-next-line

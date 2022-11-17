@@ -1,0 +1,23 @@
+@import 'placeholders';
+
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+
+  .form-element {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .dispatcher-select {
+      width: 200px;
+    }
+
+    .hint {
+      @extend %base-font16-normal;
+      color: var(--text-dark-color);
+    }
+  }
+}

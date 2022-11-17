@@ -32,7 +32,13 @@ export interface BaseBackendRequestLocationsQuery {
   y_min?: number;
   x_max?: number;
   y_max?: number;
-  urgency_category?: string;
+  serving_company?: string[];
+  efficiency?: string[];
+  grade_for_service?: string[];
+  urgency_category?: string[];
+  work_type?: string[];
+  deffect_category?: string[];
+  owner_company?: string[];
 }
 
 export type BackendRequestLocationsQuery =
@@ -42,7 +48,13 @@ export interface BaseRequestLocationsQuery {
   region: string;
   datetimeRange: ValueRange<Date>;
   area?: ValueRange<LatLng>;
-  urgency?: Urgency;
+  service?: string[];
+  efficiency?: string[];
+  grade?: string[];
+  urgency?: Urgency[];
+  work?: string[];
+  deffect?: string[];
+  owner?: string[];
 }
 
 export type RequestLocationsQuery =
@@ -62,7 +74,13 @@ export function toBaseBackendRequestLocationQuery(
     y_min: latLngMin?.y,
     x_max: latLngMax?.x,
     y_max: latLngMax?.y,
+    serving_company: query.service,
+    efficiency: query.efficiency,
+    grade_for_service: query.grade,
     urgency_category: query.urgency,
+    work_type: query.work,
+    deffect_category: query.deffect,
+    owner_company: query.owner,
   };
   /* eslint-enable camelcase */
 }

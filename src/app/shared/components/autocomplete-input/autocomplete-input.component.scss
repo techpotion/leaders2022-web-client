@@ -8,8 +8,9 @@
   width: 500px;
 
   .input-container {
-    height: 54px;
-    padding: 0 15px;
+    height: 40px;
+    padding: 0 10px;
+    padding-left: 15px;
     border-radius: 8px;
     box-sizing: border-box;
 
@@ -25,8 +26,12 @@
       border-radius: 8px 8px 0 0;
     }
 
+    img {
+      width: 20px;
+    }
+
     input {
-      @extend %base-font14-normal;
+      @extend %base-font12-normal;
 
       width: 0;
       flex-grow: 1;
@@ -41,10 +46,12 @@
 
     width: 100%;
     padding: 10px 0;
+    box-sizing: border-box;
+    overflow: hidden;
 
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
 
     background: var(--theme-white-1000-color);
     box-shadow: var(--default-shadow);
@@ -53,15 +60,25 @@
     overflow: hidden;
 
     .option {
-      @extend %base-font14-normal;
+      @extend %base-font12-normal;
 
-      min-height: 35px;
-      padding: 0 15px;
+      min-height: 30px;
+      padding: 0 12px;
 
       display: flex;
       align-items: center;
 
       color: var(--text-dark-color);
+      text-align: start;
+      transition: var(--base-transition);
+
+      &:hover {
+        background: #F3F8F3;
+      }
+
+      &:active {
+        background: #E9F1E8;
+      }
     }
   }
 }

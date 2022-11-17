@@ -1,4 +1,13 @@
-<router-outlet></router-outlet>
+<tui-root>
+    <router-outlet></router-outlet>
 
-<tp-loading-screen *ngIf="loading.globalScreen | async">
-</tp-loading-screen>
+    <tp-anomaly-faq-dialog
+            *ngIf="dialog.faqDialogOpen | async"
+            [@faqDialogAppearance]
+            (dialogClose)="dialog.faqDialogOpen.next(false)">
+    </tp-anomaly-faq-dialog>
+
+    <tp-loading-screen *ngIf="loader.loading | async"
+        [@loadingScreenAppearance]>
+    </tp-loading-screen>
+</tui-root>

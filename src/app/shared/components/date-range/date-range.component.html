@@ -1,37 +1,17 @@
 <ng-container [formGroup]="form">
-    <mat-form-field 
-        floatLabel="never">
-        <input matInput
-               [ngxMatDatetimePicker]="fromPicker"
-               placeholder="Дата и время начала"
-               formControlName="from"
-               (blur)="onTouched()">
-        <!-- eslint-disable -->
-        <mat-datepicker-toggle matSuffix
-                               [for]="$any(fromPicker)">
-        </mat-datepicker-toggle>
-        <!-- eslint-enable -->
-
-        <ngx-mat-datetime-picker #fromPicker>
-        </ngx-mat-datetime-picker>
-    </mat-form-field>
+    <tui-input-date-time class="datetime-picker"
+        formControlName="from"
+        [tuiTextfieldLabelOutside]="true"
+        tuiTextfieldSize="m">
+        Начало периода
+    </tui-input-date-time>
 
     <span>—</span>
 
-    <mat-form-field
-            floatLabel="never">
-        <input matInput
-               [ngxMatDatetimePicker]="toPicker"
-               placeholder="Дата и время конца"
-               formControlName="to"
-               (blur)="onTouched()">
-        <!-- eslint-disable -->
-        <mat-datepicker-toggle matSuffix
-                               [for]="$any(toPicker)">
-        </mat-datepicker-toggle>
-        <!-- eslint-enable -->
-
-        <ngx-mat-datetime-picker #toPicker>
-        </ngx-mat-datetime-picker>
-    </mat-form-field>
+    <tui-input-date-time class="datetime-picker"
+        formControlName="to"
+        [tuiTextfieldLabelOutside]="true"
+        tuiTextfieldSize="m">
+        Конец периода
+    </tui-input-date-time>
 </ng-container>

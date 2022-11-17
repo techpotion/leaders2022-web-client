@@ -1,34 +1,133 @@
 <ng-container [formGroup]="data.form">
-    <ng-container formGroupName="update">
+    <div class="primary-container">
         <tp-request-address-search
-                *ngIf="(view.listVisible | async) === false">
+                [@addressAppearance]
+                (@addressAppearance.done)="view.onInputAnimationEnd()"
+                *ngIf="(view.listAnimationState | async) === 'closed'">
         </tp-request-address-search>
 
-        <tp-date-range formControlName="datetimeRange">
-        </tp-date-range>
+        <ng-container formGroupName="backendFilters">
+            <tp-date-range formControlName="datetimeRange">
+            </tp-date-range>
 
-        <tp-select [options]="(regionOptions | async) ?? []"
-                class="region-select"
-                placeholder="Район"
-                formControlName="region">
-        </tp-select>
-    </ng-container>
+            <tp-select class="hood-select"
+                       [options]="(hoods | async) ?? []"
+                       placeholder="Район"
+                       formControlName="region">
+            </tp-select>
+        </ng-container>
 
-    <ng-container formGroupName="filter">
-        <tp-select [options]="urgencyOptions"
-                class="urgency-select"
-                placeholder="Срочность"
-                formControlName="urgency">
-        </tp-select>
+        <button class="clear-button"
+            (click)="clearForm()">
+            <svg width="20"
+                 height="20"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 9H10.5V18H9V9Z"
+                      fill="#004425"
+                      stroke="#004425"
+                      stroke-width="0"/>
+                <path d="M13.5 9H15V18H13.5V9Z"
+                      fill="#004425"
+                      stroke="#004425"
+                      stroke-width="0"/>
+                <path d="M3 4.4H2.9V4.5V6V6.1H3H4.4V21C4.4 21.4243 4.56857 21.8313 4.86863 22.1314C5.16869 22.4314 5.57565 22.6 6 22.6H18C18.4243 22.6 18.8313 22.4314 19.1314 22.1314C19.4314 21.8313 19.6 21.4243 19.6 21V6.1H21H21.1V6V4.5V4.4H21H3ZM6.1 20.9V6.1H17.9V20.9H6.1Z"
+                      fill="#004425"
+                      stroke="#004425"
+                      stroke-width="0"/>
+                <path d="M9.1 1.6H14.9V2.9H9.1V1.6Z"
+                      fill="#004425"
+                      stroke="#004425"
+                      stroke-width="0"/>
+            </svg>
+        </button>
 
-        <tp-select [options]="anomalyOptions"
-                class="anomaly-select"
-                placeholder="Аномалия"
-                [multiple]="true"
-                [hasFaq]="true"
-                [multiplePlaceholderFn]="anomalyPlaceholderFn"
-                (faqClick)="dialog.faqDialogOpen.next(true)"
-                formControlName="anomalyCases">
-        </tp-select>
-    </ng-container>
+        <button class="open-all-button"
+            [class.enabled]="areAllOpened | async"
+            (click)="areAllOpened.next(!areAllOpened.value)">
+            <svg width="22"
+                 height="21.12"
+                 viewBox="0 0 25 24"
+                 fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.5 19.88C15.54 20.18 15.44 20.5 15.21 20.71C15.1175 20.8027 15.0076 20.8762 14.8866 20.9264C14.7657 20.9766 14.636 21.0024 14.505 21.0024C14.374 21.0024 14.2444 20.9766 14.1234 20.9264C14.0024 20.8762 13.8925 20.8027 13.8 20.71L9.79001 16.7C9.68094 16.5934 9.59802 16.463 9.54771 16.319C9.4974 16.175 9.48107 16.0213 9.50001 15.87V10.75L4.71001 4.62C4.54762 4.41153 4.47434 4.14726 4.5062 3.88493C4.53805 3.6226 4.67244 3.38355 4.88001 3.22C5.07001 3.08 5.28001 3 5.50001 3H19.5C19.72 3 19.93 3.08 20.12 3.22C20.3276 3.38355 20.462 3.6226 20.4938 3.88493C20.5257 4.14726 20.4524 4.41153 20.29 4.62L15.5 10.75V19.88ZM6.00012 4L10.5001 10.06V15.87L14.505 19.88V10.06L19.5001 4H6.00012Z"
+                      fill="#004425"
+                      stroke="#004425"
+                      stroke-width="0.4"/>
+            </svg>
+
+            <span>
+                Все фильтры
+            </span>
+        </button>
+    </div>
+
+    <div class="secondary-container"
+        *ngIf="areAllOpened | async"
+        [@opacityAppearance]>
+
+        <ng-container formGroupName="frontendFilters">
+            <tp-select [options]="anomalies"
+                      class="anomaly-select"
+                      placeholder="Аномалия"
+                      [multiple]="true"
+                      [hasFaq]="true"
+                      [multiplePlaceholderFn]="anomalyPlaceholderFn"
+                      (faqClick)="dialog.faqDialogOpen.next(true)"
+                      formControlName="anomalyCases">
+            </tp-select>
+        </ng-container>
+
+        <ng-container formGroupName="backendFilters">
+            <tp-select [options]="(services | async) ?? []"
+                      class="service-select"
+                      [multiple]="true"
+                      placeholder="Компания-исполнитель"
+                      formControlName="services">
+            </tp-select>
+
+            <tp-select [options]="efficiencies"
+                      class="efficiency-select"
+                      [multiple]="true"
+                      placeholder="Результативность"
+                      formControlName="efficiencies">
+            </tp-select>
+
+            <tp-select [options]="grades"
+                      class="grades-select"
+                      [multiple]="true"
+                      placeholder="Оценка качества"
+                      formControlName="grades">
+            </tp-select>
+
+            <tp-select [options]="urgencies"
+                      class="urgency-select"
+                      [multiple]="true"
+                      placeholder="Срочность"
+                      formControlName="urgencies">
+            </tp-select>
+
+            <tp-select [options]="(works | async) ?? []"
+                      class="work-select"
+                      [multiple]="true"
+                      placeholder="Вид работы"
+                      formControlName="works">
+            </tp-select>
+
+            <tp-select [options]="(deffects | async) ?? []"
+                      class="deffect-select"
+                      [multiple]="true"
+                      placeholder="Категория деффекта"
+                      formControlName="deffects">
+            </tp-select>
+
+            <tp-select [options]="(owners | async) ?? []"
+                      class="owner-select"
+                      [multiple]="true"
+                      placeholder="Упр. организация"
+                      formControlName="owners">
+            </tp-select>
+        </ng-container>
+    </div>
 </ng-container>

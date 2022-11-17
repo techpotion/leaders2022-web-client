@@ -1,24 +1,115 @@
+@import 'placeholders';
+
 :host {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 15px;
+  flex-direction: column;
+  gap: 10px;
 
-  ::ng-deep {
-    .region-select {
-      width: 200px;
+  .primary-container {
+    display: flex;
+    gap: 10px;
+
+    * {
+      pointer-events: auto;
     }
 
-    .urgency-select {
-      .input-container {
-        width: 140px;
+    button {
+      height: 40px;
+      border-radius: 8px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+
+      background: var(--theme-white-1000-color);
+      transition: var(--base-transition);
+      box-shadow: var(--default-shadow);
+
+      &.clear-button {
+        min-width: 40px;
+
+        &:active {
+          path {
+            stroke-width: .4px;
+          }
+        }
+      }
+
+      &.open-all-button {
+        min-width: 120px;
+
+        color: var(--text-dark-color);
+
+        span {
+          @extend %base-font12-normal;
+
+          opacity: .7;
+          transition: var(--base-transition);
+        }
+
+        &.enabled {
+          background: var(--green-dark-color);
+          color: var(--theme-white-1000-color);
+
+          path {
+            fill: var(--theme-white-1000-color);
+            stroke: var(--theme-white-1000-color);
+          }
+        }
+      }
+
+      path {
+        transition: var(--base-transition);
+        opacity: .7;
+      }
+
+      &:hover {
+        path, span {
+          opacity: 1;
+        }
       }
     }
+  }
 
-    .anomaly-select {
-      .input-container {
-        width: 190px;
-      }
+  .secondary-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    * {
+      pointer-events: auto;
     }
+  }
+
+  .deffect-select,
+  .owner-select,
+  .work-select {
+    width: 180px;
+
+  }
+
+  .hood-select {
+    min-width: 180px;
+  }
+
+  .grades-select {
+    min-width: 155px;
+  }
+
+  .efficiency-select {
+    min-width: 160px;
+  }
+
+  .service-select {
+    min-width: 190px;
+  }
+
+  .urgency-select {
+    min-width: 130px;
+  }
+
+  .anomaly-select, {
+    min-width: 140px;
   }
 }

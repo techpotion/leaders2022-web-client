@@ -1,0 +1,21 @@
+<div class="heading">
+    <img class="icon"
+         src="assets/icons/dashboard/chart.svg"
+         alt="">
+    <span>динамика количества аномальных заявок</span>
+</div>
+
+<div class="content">
+    <div class="empty-content"
+         *ngIf="(chartData | async) === null">
+        укажите временной диапазон и район для загрузки данных
+    </div>
+
+    <canvas class="chart-canvas"
+        *ngIf="chartData | async as data"
+        baseChart
+        type="line"
+        [data]="data"
+        [options]="(chartOptions | async) ?? undefined">
+    </canvas>
+</div>

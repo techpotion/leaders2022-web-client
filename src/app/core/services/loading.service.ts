@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, filter, firstValueFrom, map, skip } from 'rxjs';
 import { sleep } from 'src/app/shared/utils/sleep';
 
 
@@ -17,25 +17,31 @@ export class LoadingService {
     private readonly router: Router,
   ) { }
 
-  public readonly globalScreen = new BehaviorSubject<boolean>(false);
 
-  public isGlobalScreenBlackout = false;
+  // #region Navigation
 
-  public showLoader = true;
+  private readonly navigationLoading = new BehaviorSubject<boolean>(false);
 
-  public loaderText?: string;
+  public readonly navigationLoading$ = this.navigationLoading.asObservable();
+
+  public startNavigationLoading(
+    showLoader = true,
+    loaderText: string | undefined = undefined,
+  ): void {
+    this.loaderText = loaderText;
+    this.showLoader = showLoader;
+
+    this.navigationLoading.next(true);
+  }
 
   public async nagivateTo(
     url: string,
     showLoader = true,
     loaderText: string | undefined = undefined,
-    waitFor: Promise<unknown> | undefined = undefined,
   ): Promise<void> {
     this.isGlobalScreenBlackout = true;
-    this.loaderText = loaderText;
-    this.showLoader = showLoader;
 
-    this.globalScreen.next(true);
+    this.startNavigationLoading(showLoader, loaderText);
     await sleep(FILTER_ANIMATION_DURATION
                 + (showLoader ? LOADER_ANIMATION_DURATION : 0)
                 + (loaderText
@@ -43,17 +49,44 @@ export class LoadingService {
                   : 0));
 
     await this.router.navigateByUrl(url);
-    if (waitFor) {
-      await waitFor;
-    }
+    await firstValueFrom(this.navigationLoading.pipe(
+      skip(1),
+      filter(loading => !loading),
+    ));
 
     await sleep(FILTER_ANIMATION_DURATION
                 + (showLoader ? LOADER_ANIMATION_DURATION : 0)
                 + (loaderText
                   ? LOADER_TEXT_ANIMATION_DURATION - LOADER_ANIMATION_DURATION
                   : 0));
-    this.globalScreen.next(false);
   }
+
+  public finishNavigationLoading(): void {
+    this.navigationLoading.next(false);
+  }
+
+  // #endregion
+
+
+  // #region Data loading
+
+  public readonly dataLoading = new BehaviorSubject<boolean>(false);
+
+  // #endregion
+
+
+  public readonly loading = combineLatest([
+    this.navigationLoading,
+    this.dataLoading,
+  ]).pipe(
+    map(([navigation, data]) => navigation || data),
+  );
+
+  public isGlobalScreenBlackout = false;
+
+  public showLoader = true;
+
+  public loaderText?: string;
 
   public async openLoader(
     loaderText: string | undefined = undefined,
@@ -61,7 +94,7 @@ export class LoadingService {
     this.isGlobalScreenBlackout = false;
     this.loaderText = loaderText;
     this.showLoader = true;
-    this.globalScreen.next(true);
+    this.dataLoading.next(true);
 
     await sleep(FILTER_ANIMATION_DURATION
                 + LOADER_ANIMATION_DURATION
@@ -71,7 +104,7 @@ export class LoadingService {
   }
 
   public async closeLoader(): Promise<void> {
-    if (!this.globalScreen.value) {
+    if (!this.dataLoading.value) {
       return;
     }
 
@@ -80,7 +113,7 @@ export class LoadingService {
                 + (this.loaderText
                   ? LOADER_TEXT_ANIMATION_DURATION - LOADER_ANIMATION_DURATION
                   : 0));
-    this.globalScreen.next(false);
+    this.dataLoading.next(false);
   }
 
 }

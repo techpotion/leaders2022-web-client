@@ -1,0 +1,44 @@
+<div class="top-container">
+    <div class="heading-container">
+        <img class="icon" src="assets/icons/dependence/message.svg" alt="">
+
+        <span class="heading">
+            Влияние анализа обратной связи по обращениям на повышение
+            эффективности работы ППОЗ АСУ ОДС
+        </span>
+    </div>
+
+    <tp-profile-controls></tp-profile-controls>
+</div>
+
+<div class="content-container">
+    <tp-dependence-form>
+    </tp-dependence-form>
+
+    <div class="chart-container">
+        <ng-template #emptyPlot>
+            <img class="empty-plot"
+                 src="assets/illustrations/dependence-plot-empty.svg" alt="">
+        </ng-template>
+
+        <img class="plot"
+             *ngIf="data.plot | async as plotSrc; else emptyPlot"
+            [src]="plotSrc" alt="">
+
+        <div class="hint-container" *ngIf="(data.plot | async) === null">
+            <span class="error-text" *ngIf="data.hasError | async; else emptyHint">
+                Недостаточно данных для построение графика. Попробуйте выбрать
+                более широкий временной диапазон
+            </span>
+            <ng-template #emptyHint>
+                <span class="empty-text">
+                    Укажите временной диапазон и ОДС для загрузки данных
+                </span>
+            </ng-template>
+
+            <img src="assets/icons/calendar-red.svg"
+                 alt=""
+                 *ngIf="data.hasError | async">
+        </div>
+    </div>
+</div>

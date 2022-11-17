@@ -35,6 +35,9 @@ export class DateDeltaPipe implements PipeTransform {
       }
       returnString = returnString + minutes;
     }
+    if (returnString.length === 0) {
+      returnString = '0 мин.';
+    }
 
     return returnString;
   }

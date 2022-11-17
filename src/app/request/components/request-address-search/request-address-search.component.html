@@ -1,5 +1,5 @@
 <ng-container [formGroup]="data.form">
-    <ng-container formGroupName="filter">
+    <ng-container formGroupName="frontendFilters">
         <tp-autocomplete-input class="input"
                                formControlName="address"
                                [options]="(addresses | async) ?? []">

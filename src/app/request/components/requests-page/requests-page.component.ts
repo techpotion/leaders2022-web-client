@@ -1,9 +1,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy } from '@angular/core';
 import * as _ from 'lodash';
-import { filter, map, merge } from 'rxjs';
+import { filter, first, map, merge } from 'rxjs';
+import { LoadingService } from 'src/app/core/services/loading.service';
+import { opacityAppearanceAnimation } from 'src/app/shared/animations/opacity-appearance.animation';
+import { listAppearanceAnimation } from '../../animations/list-appearance.animation';
 import { RequestViewService } from '../../services/request-view.service';
 import { RequestsDataService } from '../../services/requests-data.service';
-import { RequestsPageDialogService } from '../../services/requests-page-dialog.service';
+import { RequestsMapEventService } from '../../services/requests-map-event.service';
 
 
 @Component({
@@ -11,14 +14,33 @@ import { RequestsPageDialogService } from '../../services/requests-page-dialog.s
   templateUrl: './requests-page.component.html',
   styleUrls: ['./requests-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    opacityAppearanceAnimation(),
+    listAppearanceAnimation(),
+  ],
 })
 export class RequestsPageComponent implements OnDestroy {
 
   constructor(
     public readonly data: RequestsDataService,
-    public readonly dialog: RequestsPageDialogService,
+    public readonly loader: LoadingService,
+    private readonly mapEvents: RequestsMapEventService,
     public readonly view: RequestViewService,
-  ) { }
+  ) {
+    this.loader.startNavigationLoading(
+      true, 'Загружаем карту, осталось еще немного.',
+    );
+    this.mapEvents.load$.pipe(first()).subscribe(() => {
+      this.loader.finishNavigationLoading();
+    });
+
+    this.view.firstDataLoad = true;
+    this.data.clearFormState();
+
+    if (this.data.form.valid) {
+      this.data.reload.emit();
+    }
+  }
 
 
   // #region Lifecycle
@@ -38,7 +60,10 @@ export class RequestsPageComponent implements OnDestroy {
     this.data.form.valueChanges.pipe(
       filter(() => this.data.form.valid),
       map(() => !_.isEqual(
-        this.data.form.value,
+        {
+          frontend: this.data.form.value.frontendFilters,
+          backend: this.data.form.value.backendFilters,
+        },
         this.data.updateFormState,
       )),
     ),

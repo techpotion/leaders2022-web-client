@@ -10,43 +10,50 @@
         </tp-sort-n-group-control>
     </div>
 
+    <tp-anomaly-only-toggle>
+    </tp-anomaly-only-toggle>
+
     <tp-requests-brief-analytics>
     </tp-requests-brief-analytics>
 </div>
 
-<ng-container *ngIf="data.requests | async as syncRequests">
-    <cdk-virtual-scroll-viewport
-            #scrollViewport
-            class="scroll-container"
-            *ngIf="syncRequests.length"
-            appendOnly
-            [itemSize]="220"
-            [minBufferPx]="1200"
-            [maxBufferPx]="1210">
-        <tp-request-card class="request-card"
-                *cdkVirtualFor="let request of syncRequests"
-                [request]="request"
-                [id]="'request-card-' + request.id">
-        </tp-request-card>
-    </cdk-virtual-scroll-viewport>
-</ng-container>
+<div class="content-container"
+    [@opacityChangeState]="animationState | async">
+    <div class="animation-content-container"
+        *ngIf="(animationState | async) === 'content'">
+        <cdk-virtual-scroll-viewport
+                #scrollViewport
+                class="scroll-container"
+                *ngIf="data.requests | async as syncRequests"
+                appendOnly
+                [itemSize]="160"
+                [minBufferPx]="1100"
+                [maxBufferPx]="1110">
+            <tp-request-card class="request-card"
+                             *cdkVirtualFor="let request of syncRequests"
+                             [request]="request"
+                             [id]="'request-card-' + request.id">
+            </tp-request-card>
+        </cdk-virtual-scroll-viewport>
+    </div>
 
-<div class="no-content-container hint-container"
-    *ngIf="(data.requests | async) === null">
-    <span class="hint">
-        Пока список пуст. Чтобы найти аномальные заявки, выберите 
-        район и временной диапазон в фильтрах карты.
-    </span>
+    <div class="no-content-container hint-container"
+         *ngIf="(animationState | async) === 'noContent'">
+        <span class="hint">
+            Пока список пуст. Чтобы найти аномальные заявки, выберите 
+            район и временной диапазон в фильтрах карты.
+        </span>
 
-    <img src="assets/illustrations/confused-girl.png" alt="">
-</div>
+        <img src="assets/illustrations/confused-girl.png" alt="">
+    </div>
 
-<div class="content-empty-container hint-container"
-    *ngIf="(data.requests | async)?.length === 0">
-    <span class="hint">
-        Результаты по вашему запросу не найдены. Измените значения фильтров и
-        попробуйте снова.
-    </span>
+    <div class="empty-content-container hint-container"
+         *ngIf="(animationState | async) === 'emptyContent'">
+        <span class="hint">
+            Результаты по вашему запросу не найдены. Измените значения фильтров и
+            попробуйте снова.
+        </span>
 
-    <img src="assets/illustrations/sad-girl.png" alt="">
+        <img src="assets/illustrations/sad-girl.png" alt="">
+    </div>
 </div>

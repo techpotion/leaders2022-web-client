@@ -1,0 +1,18 @@
+<ng-container [formGroup]="formData.form">
+    <ng-container formGroupName="backendFilters">
+        <tp-date-range formControlName="datetimeRange">
+        </tp-date-range>
+
+        <tp-select class="hood-select"
+            [options]="(hoods | async) ?? []"
+            placeholder="Район"
+            formControlName="region">
+        </tp-select>
+
+        <button tpFiltersUpdateButton
+                [@opacityAppearance]
+                *ngIf="updateButtonVisible | async"
+                (click)="onUpdateClick()">
+        </button>
+    </ng-container>
+</ng-container>

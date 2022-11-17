@@ -1,38 +1,135 @@
+@import 'placeholders';
+
 :host {
+  position: relative;
+
+  height: 40px;
+  padding: 8px 10px;
+  box-sizing: border-box;
+
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 15px;
 
   border-radius: 8px;
   box-shadow: var(--default-shadow);
 
   background: var(--theme-white-1000-color);
 
-  .sign-out-button {
+  .menu-button {
     display: flex;
-    padding: 12px;
-
-    path {
-      transition: var(--base-transition);
-    }
-
-    &:hover {
-      path {
-        opacity: 1;
-      }
-    }
 
     &:active {
       path {
-        stroke-width: .5;
+        stroke-width: .6;
       }
     }
   }
 
   .avatar {
-    width: 30px;
-    margin: 12px;
-    margin-left: 0;
-    border-radius: 10px;
+    width: 24px;
+    border-radius: 8px;
+  }
+
+  .animation-container {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 34px;
+    z-index: 1;
+
+    width: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+
+    box-shadow: var(--2x-shadow);
+    background: var(--theme-white-1000-color);
+
+    .routing-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+
+      .option {
+        min-height: 30px;
+        padding: 5px 0;
+        padding-right: 10px;
+        padding-left: 5px;
+        border-radius: 8px;
+        box-sizing: border-box;
+
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        transition: var(--base-transition);
+
+        .hint {
+          @extend %tertiary-font12-normal;
+          text-align: start;
+          color: var(--text-dark-color);
+        }
+
+        .icon-container {
+          height: 18px;
+          width: 18px;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        &:hover:not(:disabled) {
+          background: #F3F8F3;
+        }
+
+        &:active:not(:disabled) {
+          background: #E9F1E8;
+
+          &.requests {
+            path {
+              stroke-width: .4px;
+            }
+          }
+
+          &.dashboard {
+            path {
+              stroke-width: 1.6px;
+            }
+          }
+
+          &.dependency {
+            path {
+              stroke-width: .2px;
+            }
+          }
+
+          &.exit {
+            path {
+              stroke-width: .6px;
+            }
+          }
+        }
+
+        &:disabled {
+          background: #F7FAFC;
+        }
+      }
+    }
+  }
+
+  button {
+    path {
+      transition: var(--base-transition);
+    }
+
+    &:hover:not(:disabled) {
+      path {
+        opacity: 1;
+      }
+    }
   }
 }

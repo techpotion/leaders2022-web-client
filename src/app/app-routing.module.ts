@@ -23,6 +23,18 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
   },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+  },
+  {
+    path: 'dependence',
+    loadChildren: () => import('./dependence/dependence.module').then(m => m.DependenceModule),
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+  },
 ];
 
 @NgModule({

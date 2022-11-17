@@ -1,5 +1,9 @@
 :host {
-  width: 430px;
+  width: 360px;
+  border-radius: 8px;
+
+  background: var(--theme-white-1000-color);
+  box-shadow: var(--default-shadow);
 
   .input {
     width: 100%;

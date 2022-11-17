@@ -1,8 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { AfterViewInit, ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { LoadingService } from 'src/app/core/services/loading.service';
-import { RequestsMapEventService } from 'src/app/request/services/requests-map-event.service';
 
 import { slideEnteringAnimation } from 'src/app/shared/animations/slide-entering.animation';
 
@@ -16,17 +14,25 @@ import { slideEnteringAnimation } from 'src/app/shared/animations/slide-entering
     slideEnteringAnimation(),
   ],
 })
-export class AuthPageComponent {
+export class AuthPageComponent implements AfterViewInit {
 
   constructor(
-    private readonly requestsMapEvents: RequestsMapEventService,
-    private readonly loading: LoadingService,
+    private readonly loader: LoadingService,
   ) { }
 
+
+  // #region Lifecycle
+
+  public ngAfterViewInit(): void {
+    this.loader.finishNavigationLoading();
+  }
+
+  // #endregion
+
+
   public async onAuthorization(): Promise<void> {
-    await this.loading.nagivateTo(
+    await this.loader.nagivateTo(
       '', true, 'Загружаем карту, осталось еще немного',
-      firstValueFrom(this.requestsMapEvents.load$),
     );
   }
 

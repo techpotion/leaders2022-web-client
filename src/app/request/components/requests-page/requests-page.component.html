@@ -1,8 +1,13 @@
 <tp-requests-list class="list"
-    *ngIf="view.listVisible| async">
+    *ngIf="(view.listAnimationState | async) === 'opened'"
+    [@.disabled]="loader.loading | async"
+    [@listAppearance]
+    (@listAppearance.start)="view.onListAnimationStart()"
+    (@listAppearance.done)="view.listAnimationEnd.emit()">
 </tp-requests-list>
 
-<div class="map-container">
+<div class="map-container"
+    [@.disabled]="loader.loading | async">
     <tp-requests-map class="map">
     </tp-requests-map>
 
@@ -10,18 +15,21 @@
         <div class="right-container">
             <button tpRequestsListToggle
                 class="request-toggle"
-                [isOpen]="(view.listVisible| async) ?? false"
-                (isOpenChange)="view.listVisible.next($event)">
+                [isOpen]="(view.listAnimationState | async) === 'opened'"
+                (isOpenChange)="view.toggleList($event)">
             </button>
 
             <div class="filters-container">
                 <tp-requests-filters class="filters">
                 </tp-requests-filters>
                 
-                <button tpRequestsFiltersUpdateButton
-                    *ngIf="loadButtonVisible | async"
-                    (click)="data.reload.emit()">
-                </button>
+                <div class="update-button-container">
+                    <button tpFiltersUpdateButton
+                            [@opacityAppearance]
+                            *ngIf="loadButtonVisible | async"
+                            (click)="data.reload.emit()">
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -48,6 +56,3 @@
     </div>
 </div>
 
-<tp-anomaly-faq-dialog *ngIf="dialog.faqDialogOpen | async"
-    (dialogClose)="dialog.faqDialogOpen.next(false)">
-</tp-anomaly-faq-dialog>

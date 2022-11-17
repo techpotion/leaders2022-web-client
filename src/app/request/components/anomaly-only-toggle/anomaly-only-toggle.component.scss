@@ -1,0 +1,14 @@
+@import 'placeholders';
+
+:host {
+  @extend %base-font12-normal;
+
+  width: 100%;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+
+  color: var(--text-dark-color);
+}

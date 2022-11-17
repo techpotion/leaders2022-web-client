@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { TUI_DATE_TIME_VALUE_TRANSFORMER } from '@taiga-ui/kit';
 import { map, takeUntil } from 'rxjs';
 import { ValueRange } from 'src/app/request/models/range';
+import { DatetimeValueTransformer } from '../../utils/datetime-value-transformer';
 
 
 @Component({
@@ -10,6 +12,10 @@ import { ValueRange } from 'src/app/request/models/range';
   styleUrls: ['./date-range.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
+    {
+      provide: TUI_DATE_TIME_VALUE_TRANSFORMER,
+      useClass: DatetimeValueTransformer,
+    },
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => DateRangeComponent),

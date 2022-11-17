@@ -1,7 +1,7 @@
 @import 'placeholders';
 
 :host {
-  padding: 25px;
+  padding: 15px;
   box-sizing: border-box;
   border-radius: 8px;
 
@@ -10,20 +10,15 @@
 
   display: flex;
   flex-direction: column;
-  gap: 30px;
 
   .brief-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
 
     .heading-container {
       width: 100%;
       box-sizing: border-box;
-
-      &.short {
-        padding-right: 24px;
-      }
 
       display: flex;
       align-items: flex-start;
@@ -36,12 +31,12 @@
         gap: 5px;
 
         .number {
-          @extend %tertiary-font12-normal;
+          @extend %tertiary-font10-normal;
           color: var(--neutral-400-color);
         }
 
         .open-toggle {
-          @extend %base-font16-bold;
+          @extend %base-font14-bold;
           color: var(--basic-1100-color);
           text-align: start;
 
@@ -59,15 +54,16 @@
       }
 
       .anomaly-container {
-        height: 41px;
+        height: 42px;
+        min-width: 24px;
 
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        justify-content: space-between;
         align-items: center;
 
         .probability {
-          @extend %tertiary-font14-semibold;
+          @extend %tertiary-font12-semibold;
 
           color: var(--theme-secondary-800-color);
         }
@@ -107,9 +103,9 @@
       gap: 10px;
 
       .badge {
-        @extend %tertiary-font14-medium;
+        @extend %tertiary-font12-medium;
 
-        padding: 4px 9px;
+        padding: 3px 8px;
         border-radius: 12px;
 
         background: #F0F6ED;
@@ -121,13 +117,13 @@
         }
 
         &.has-anomaly-badge {
-          @extend %tertiary-font14-bold;
+          @extend %tertiary-font12-bold;
         }
 
         &.anomaly-badge {
           display: flex;
           align-items: center;
-          gap: 6px;
+          gap: 5px;
 
           .faq-button {
             width: 12px;
@@ -151,7 +147,7 @@
           }
 
           .value {
-            @extend %tertiary-font14-normal;
+            @extend %tertiary-font12-normal;
           }
         }
       }
@@ -166,11 +162,11 @@
       .left-container {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 15px;
 
         .icon-container {
-          min-width: 36px;
-          height: 36px;
+          min-width: 28px;
+          height: 28px;
           border-radius: 8px;
 
           display: flex;
@@ -182,6 +178,10 @@
 
           &.bad {
             background: #fff3f3;
+          }
+
+          img {
+            width: 20px;
           }
         }
       }
@@ -222,22 +222,25 @@
   .property-container {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 3px;
 
     .property-name {
-      @extend %tertiary-font14-medium;
+      @extend %tertiary-font12-medium;
 
       color: var(--neutral-500-color);
     }
 
     .property-value {
-      @extend %tertiary-font14-semibold;
+      @extend %tertiary-font12-semibold;
 
       color: var(--text-dark-color);
     }
   }
 
   .full-container {
+    padding-top: 25px;
+    overflow: hidden;
+
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -262,7 +265,7 @@
       justify-content: flex-end;
 
       .close-button {
-        @extend %tertiary-font14-normal;
+        @extend %tertiary-font12-normal;
 
         color: var(--green-dark-color);
         opacity: .7;
@@ -270,15 +273,11 @@
         transition: var(--base-transition);
 
         &:hover {
-          @extend %tertiary-font14-medium;
-
-          opacity: .8;
+          @extend %tertiary-font12-medium;
         }
 
         &:active {
-          @extend %tertiary-font14-medium;
-
-          opacity: .8;
+          opacity: 1;
         }
       }
     }

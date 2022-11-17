@@ -1,0 +1,47 @@
+<div class="heading">
+    <img class="icon"
+         src="assets/icons/dashboard/medal.svg"
+         alt="">
+    <span>рейтинг организаций-исполнителей по количеству аномальных заявок</span>
+</div>
+
+<div class="content">
+    <div class="empty-content"
+         *ngIf="(searchedOptions | async) === null">
+        укажите временной диапазон и район для загрузки данных
+    </div>
+
+    <div class="not-empty-content"
+        *ngIf="searchedOptions | async as options">
+        <div class="input-container" (click)="input.focus()">
+            <input type="text"
+                   [formControl]="searchControl"
+                   placeholder="Введите название организации-исполнителя"
+                   #input>
+
+            <img src="assets/icons/green-search.svg" alt="search">
+        </div>
+
+        <div class="content-table">
+            <div class="headings">
+                <span class="index"></span>
+                <span class="name">Наименование</span>
+                <span class="count-heading">Аномальных заявок, шт.</span>
+                <span class="percentage-heading">Аномальных заявок, %</span>
+            </div>
+            <div class="options">
+                <div class="option"
+                    *ngFor="let option of options; let i = index">
+                    <span class="index">{{ i + 1 }}</span>
+                    <span class="name">{{ option.service }}</span>
+                    <div class="count-container">
+                        <span class="count">{{ option.count }} шт.</span>
+                    </div>
+                    <div class="percentage-container">
+                        <span class="percentage">{{ option.percentage | percent : '.0-1' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

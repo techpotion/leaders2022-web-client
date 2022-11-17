@@ -1,0 +1,34 @@
+<ng-container [formGroup]="data.form">
+    <div class="form-element">
+        <span class="hint">
+            1. Выберите временной диапазон
+        </span>
+
+        <tp-date-range formControlName="datetimeRange">
+        </tp-date-range>
+    </div>
+
+    <div class="form-element">
+        <span class="hint">
+            2. Выберите ОДС
+        </span>
+
+        <tp-select class="dispatcher-select"
+                   placeholder="ОДС"
+                   [options]="(dispatchers | async) ?? []"
+                   formControlName="dispatcher">
+        </tp-select>
+    </div>
+
+    <div class="form-element">
+        <span class="hint">
+            3. Получите результат
+        </span>
+
+        <button tpButton
+            (click)="data.reload.emit()"
+            [disabled]="(submitButtonEnabled | async) !== true">
+            Получить результат
+        </button>
+    </div>
+</ng-container>

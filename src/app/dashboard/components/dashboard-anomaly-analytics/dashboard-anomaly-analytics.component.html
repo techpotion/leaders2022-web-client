@@ -1,0 +1,85 @@
+<div class="analytics-card">
+    <div class="heading">
+        <img class="icon"
+             src="assets/icons/dashboard/slashes-red.svg"
+             alt="">
+        <span>% аномальных заявок</span>
+    </div>
+
+    <div class="content">
+        <div class="empty-content"
+            *ngIf="(data.analytics | async) === null">
+            укажите временной диапазон и район для загрузки данных
+        </div>
+
+        <div class="not-empty-content"
+            *ngIf="data.analytics | async as analytics">
+            <div class="value-container">
+                <span class="value">
+                    {{ analytics.percentage.absolute | percent : '.0-1' }}
+                </span>
+
+                <div class="dynamics-container"
+                    [class.positive]="analytics.percentage.dynamics.isPositive"
+                    [class.negative]="analytics.percentage.dynamics.isPositive === false"
+                    [class.neutral]="analytics.percentage.dynamics.isPositive === null">
+                    <span class="value">
+                        {{ analytics.percentage.dynamics.value | percent : '.0-1' }}
+                    </span>
+                    <img class="icon"
+                         *ngIf="analytics.percentage.dynamics.isPositive === false"
+                         src="assets/icons/dashboard/arrow-down.svg" alt="">
+                    <img class="icon"
+                         *ngIf="analytics.percentage.dynamics.isPositive"
+                         src="assets/icons/dashboard/arrow-up.svg" alt="">
+                    <img class="icon"
+                         *ngIf="analytics.percentage.dynamics.isPositive === null"
+                         src="assets/icons/dashboard/arrow-updown.svg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="analytics-card">
+    <div class="heading">
+        <img class="icon"
+             src="assets/icons/dashboard/slashes-green.svg"
+             alt="">
+        <span>число аномальных заявок</span>
+    </div>
+
+    <div class="content">
+        <div class="empty-content"
+             *ngIf="(data.analytics | async) === null">
+            укажите временной диапазон и район для загрузки данных
+        </div>
+
+        <div class="not-empty-content"
+             *ngIf="data.analytics | async as analytics">
+            <div class="value-container">
+                <span class="value">
+                    {{ analytics.count.absolute }}
+                </span>
+
+                <div class="dynamics-container"
+                    [class.positive]="analytics.count.dynamics.isPositive"
+                    [class.negative]="analytics.count.dynamics.isPositive === false"
+                    [class.neutral]="analytics.count.dynamics.isPositive === null">
+                    <span class="value">
+                        {{ analytics.count.dynamics.value }}
+                    </span>
+                    <img class="icon"
+                         *ngIf="analytics.count.dynamics.isPositive === false"
+                         src="assets/icons/dashboard/arrow-down.svg" alt="">
+                    <img class="icon"
+                         *ngIf="analytics.count.dynamics.isPositive"
+                         src="assets/icons/dashboard/arrow-up.svg" alt="">
+                    <img class="icon"
+                         *ngIf="analytics.count.dynamics.isPositive === null"
+                         src="assets/icons/dashboard/arrow-updown.svg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

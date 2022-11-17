@@ -3,9 +3,9 @@
 :host {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
 
-  width: 525px;
+  width: 425px;
   padding-top: 10px;
   box-sizing: border-box;
 
@@ -15,11 +15,11 @@
 
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 
     .control-container {
       display: flex;
-      gap: 15px;
+      gap: 10px;
 
       .address-search {
         width: 0;
@@ -28,45 +28,57 @@
     }
   }
 
-  .scroll-container {
+  .content-container {
+    position: relative;
     height: 0;
     flex-grow: 1;
-  }
 
-  ::ng-deep {
-    .cdk-virtual-scroll-content-wrapper {
-      padding: 20px;
-      padding-right: 10px;
-      padding-left: 5px;
-      box-sizing: border-box;
+    .hint-container,
+    .animation-content-container {
+      position: absolute;
+      left: 0;
+      top: 0;
 
+      height: 100%;
+      width: 100%;
+    }
+
+    .scroll-container {
+      height: 100%;
+    }
+
+    ::ng-deep {
+      .cdk-virtual-scroll-content-wrapper {
+        padding: 10px;
+        padding-right: 10px;
+        padding-left: 5px;
+        box-sizing: border-box;
+
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+
+    .hint-container {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-    }
-  }
+      align-items: center;
+      justify-content: center;
+      gap: 50px;
 
-  .hint-container {
-    height: 0;
-    flex-grow: 1;
+      .hint {
+        @extend %secondary-font20-normal;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
+        max-width: 300px;
+        text-align: center;
 
-    .hint {
-      @extend %secondary-font24-normal;
+        color: var(--text-dark-color);
+      }
 
-      max-width: 380px;
-      text-align: center;
-
-      color: var(--text-dark-color);
-    }
-
-    img {
-      height: 250px;
+      img {
+        height: 250px;
+      }
     }
   }
 }

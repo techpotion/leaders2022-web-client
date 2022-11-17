@@ -1,0 +1,125 @@
+@import 'placeholders';
+
+:host {
+  background: var(--theme-white-1000-color);
+  box-shadow: var(--default-shadow);
+
+  width: 0;
+  flex-grow: 1;
+  height: 180px;
+  padding: 15px;
+  border-radius: 8px;
+  box-sizing: border-box;
+
+  display: flex;
+  gap: 50px;
+
+  .left-container {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    &.no-content {
+      width: 100%;
+    }
+
+    .heading {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      span {
+        @extend %tertiary-font12-medium;
+        color: #767F8B;
+        text-transform: uppercase;
+      }
+
+      .faq-button {
+        width: 15px;
+        height: 15px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        path {
+          transition: var(--base-transition);
+        }
+
+        &:hover {
+          path {
+            opacity: 1;
+          }
+        }
+
+        &:active {
+          path {
+            stroke-width: 0.5px;
+          }
+        }
+      }
+    }
+
+    .empty-content {
+      @extend %tertiary-font12-medium;
+
+      height: 100%;
+      padding-bottom: 30px;
+      box-sizing: border-box;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+      text-transform: uppercase;
+      color: var(--text-muted-color);
+    }
+
+    .not-empty-content {
+      height: 0;
+      flex-grow: 1;
+
+      overflow: auto;
+
+      .row {
+        height: 30px;
+
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        color: var(--text-dark-color);
+
+        .number {
+          @extend %tertiary-font12-semibold;
+
+          width: 10px;
+          margin-right: 20px;
+
+          display: flex;
+          justify-content: center;
+        }
+
+        .name,
+        .count,
+        .percentage {
+          @extend %tertiary-font12-normal;
+
+          width: 50px;
+        }
+      }
+    }
+  }
+
+  .right-container {
+    height: 100%;
+    width: 0;
+    flex-grow: 1;
+
+    .chart-canvas {
+      height: 100% !important;
+    }
+  }
+}

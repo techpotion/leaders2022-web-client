@@ -1,3 +1,4 @@
+import { animate, query, sequence, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, HostListener } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BehaviorSubject, combineLatest, map } from 'rxjs';
@@ -20,6 +21,34 @@ interface SortNGroupValue {
       useExisting: forwardRef(() => SortNGroupControlComponent),
       multi: true,
     },
+  ],
+  animations: [
+    trigger('selectContainerAppearance', [
+      transition(':enter', [
+        style({ 'max-height': 0, 'max-width': 40 }),
+        query('.select-container', style({ opacity: 0 })),
+        sequence([
+          animate('.2s ease-out', style({
+            'max-height': '*',
+            'max-width': '*',
+          })),
+          query('.select-container', animate('.2s ease-out', style({
+            opacity: 1,
+          }))),
+        ]),
+      ]),
+      transition(':leave', [
+        sequence([
+          query('.select-container', animate('.2s ease-out', style({
+            opacity: 0,
+          }))),
+          animate('.2s ease-out', style({
+            'max-height': 0,
+            'max-width': 40,
+          })),
+        ]),
+      ]),
+    ]),
   ],
 })
 export class SortNGroupControlComponent implements ControlValueAccessor {

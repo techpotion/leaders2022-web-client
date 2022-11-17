@@ -1,0 +1,41 @@
+:host {
+  padding: 3px;
+
+  .container {
+    width: 36px;
+    padding: 2px;
+    border-radius: 12px;
+    box-sizing: border-box;
+
+    transition: var(--base-transition);
+
+    background: #E8E8E8;
+    box-shadow: var(--base-shadow);
+
+    &:hover {
+      background: var(--neutral-200-color);
+    }
+
+    .dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 8px;
+
+      transition: var(--base-transition);
+
+      background: var(--theme-white-1000-color);
+    }
+
+    &.enabled {
+      background: #4C7C66;
+
+      &:hover {
+        background: #336951;
+      }
+
+      .dot {
+        margin-left: 16px;
+      }
+    }
+  }
+}

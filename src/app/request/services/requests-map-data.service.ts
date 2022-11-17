@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
+import { first } from 'rxjs';
+import { RequestsMapEventService } from './requests-map-event.service';
 
 
 @Injectable({
@@ -7,7 +9,9 @@ import * as mapboxgl from 'mapbox-gl';
 })
 export class RequestsMapDataService {
 
-  constructor() { }
+  constructor(
+    private readonly events: RequestsMapEventService,
+  ) { }
 
 
   // #region Init
@@ -16,7 +20,18 @@ export class RequestsMapDataService {
 
   public init(map: mapboxgl.Map): void {
     this.map = map;
+
+    this.events.load$.pipe(
+      first(),
+    ).subscribe(() => {
+      for (const cb of this.loadCallbacks) {
+        cb();
+      }
+      this.loadCallbacks = [];
+    });
   }
+
+  public loadCallbacks: (() => unknown)[] = [];
 
   // #endregion
 
@@ -24,12 +39,22 @@ export class RequestsMapDataService {
   // #region Layers
 
   public addLayer(layer: mapboxgl.AnyLayer): void {
-    this.map?.addLayer(layer);
+    if (!this.map || !this.events.isLoaded) {
+      this.loadCallbacks.push(() => this.addLayer(layer));
+      return;
+    }
+
+    this.map.addLayer(layer);
   }
 
   public removeLayer(id: string): void {
+    if (!this.map || !this.events.isLoaded) {
+      this.loadCallbacks.push(() => this.removeLayer(id));
+      return;
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (this.map?.getLayer(id)) {
+    if (this.map.getLayer(id)) {
       this.map.removeLayer(id);
     }
   }
@@ -40,12 +65,22 @@ export class RequestsMapDataService {
   // #region Sources
 
   public addSource(id: string, source: mapboxgl.GeoJSONSourceRaw): void {
-    this.map?.addSource(id, source);
+    if (!this.map || !this.events.isLoaded) {
+      this.loadCallbacks.push(() => this.addSource(id, source));
+      return;
+    }
+
+    this.map.addSource(id, source);
   }
 
   public removeSource(id: string): void {
+    if (!this.map || !this.events.isLoaded) {
+      this.loadCallbacks.push(() => this.removeSource(id));
+      return;
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (this.map?.getSource(id)) {
+    if (this.map.getSource(id)) {
       this.map.removeSource(id);
     }
   }
